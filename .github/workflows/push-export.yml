@@ -5,6 +5,10 @@ on:
       - main
       # - staging
       # - "feature/**"
+
+permissions:
+  contents: write
+
 env:
   GODOT_VERSION: 3.5
   EXPORT_NAME: godot-game-template
