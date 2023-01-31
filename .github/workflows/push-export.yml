@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 env:
-  GODOT_VERSION: 3.5
+  GODOT_VERSION: 3.5.1
   EXPORT_NAME: godot-game-template
   ITCH_IO: false #set to true if you want to enable automatic itch.io deploy
   RELEASE_ANDROID: false #set to  true if you want to enable automatic android release export
@@ -21,7 +21,7 @@ jobs:
     name: Windows Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:3.5
+      image: barichello/godot-ci:3.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -56,7 +56,7 @@ jobs:
     name: Linux Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:3.5
+      image: barichello/godot-ci:3.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -91,7 +91,7 @@ jobs:
     name: Web Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:3.5
+      image: barichello/godot-ci:3.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -135,7 +135,7 @@ jobs:
     name: Mac Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:3.5
+      image: barichello/godot-ci:3.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -169,7 +169,7 @@ jobs:
     name: Android Export
     runs-on: ubuntu-20.04
     container:
-      image: barichello/godot-ci:3.5
+      image: barichello/godot-ci:3.5.1
     steps:
       - name: Checkout
         uses: actions/checkout@v1
