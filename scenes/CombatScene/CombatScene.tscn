@@ -12,7 +12,7 @@ position = Vector2( 376, 311 )
 script = ExtResource( 4 )
 
 [node name="Alleato" type="Sprite" parent="."]
-position = Vector2( -166, -6 )
+position = Vector2( -79, -18 )
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
 
@@ -22,11 +22,63 @@ margin_top = 49.0
 margin_right = 34.0
 margin_bottom = 63.0
 theme = SubResource( 1 )
-max_value = 0.0
+
+[node name="sword" type="Button" parent="Alleato"]
+margin_left = -290.0
+margin_top = 181.0
+margin_right = -38.0
+margin_bottom = 305.0
+text = "SWORD"
+
+[node name="attack1" type="Label" parent="Alleato/sword"]
+visible = false
+margin_left = 620.0
+margin_top = -338.0
+margin_right = 903.0
+margin_bottom = -214.0
+text = "MI HAI COLPITO CON UNA SPADATA"
+
+[node name="fist" type="Button" parent="Alleato"]
+margin_left = -36.0
+margin_top = 181.0
+margin_right = 203.0
+margin_bottom = 307.0
+text = "PUGNO"
+
+[node name="attack2" type="Label" parent="Alleato/fist"]
+visible = false
+margin_left = 372.0
+margin_top = -340.0
+margin_right = 588.0
+margin_bottom = -326.0
+text = "MI HAI COLPITO CON UN PUGNO"
+
+[node name="warhead" type="Button" parent="Alleato"]
+margin_left = 207.0
+margin_top = 181.0
+margin_right = 445.0
+margin_bottom = 307.0
+text = "TESTATA"
+
+[node name="attack3" type="Label" parent="Alleato/warhead"]
+visible = false
+anchor_left = -0.124
+anchor_top = -0.397
+anchor_right = -0.124
+anchor_bottom = -0.397
+margin_left = 159.512
+margin_top = -314.978
+margin_right = 388.512
+margin_bottom = -248.978
+text = "MI HAI COLPITO CON UNA TESTATA"
+align = 1
+valign = 1
+uppercase = true
+percent_visible = -0.04
 
 [node name="Nemico" type="Sprite" parent="."]
-position = Vector2( 330, 0 )
-scale = Vector2( 2.14516, 1 )
+position = Vector2( 306.25, -9 )
+scale = Vector2( 1.47581, 1 )
 texture = ExtResource( 1 )
 script = ExtResource( 3 )
 
@@ -35,3 +87,9 @@ margin_left = -28.4361
 margin_top = 43.0
 margin_right = 27.5639
 margin_bottom = 57.0
+
+[node name="Node" type="Node" parent="."]
+
+[connection signal="pressed" from="Alleato/sword" to="." method="_on_sword_pressed"]
+[connection signal="pressed" from="Alleato/fist" to="." method="_on_fist_pressed"]
+[connection signal="pressed" from="Alleato/warhead" to="." method="_on_warhead_pressed"]
