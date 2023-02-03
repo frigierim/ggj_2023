@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/pause_button.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/icon.png" type="Texture" id=2]
+[ext_resource path="res://scenes/CombatScene/Personaggio.gd" type="Script" id=3]
+[ext_resource path="res://scenes/CombatScene/Combattimento.gd" type="Script" id=4]
+
+[sub_resource type="Theme" id=1]
+
+[node name="Combattimento" type="Node2D"]
+position = Vector2( 376, 311 )
+script = ExtResource( 4 )
+
+[node name="Alleato" type="Sprite" parent="."]
+position = Vector2( -166, -6 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="ProgressBar" type="ProgressBar" parent="Alleato"]
+margin_left = -35.0
+margin_top = 49.0
+margin_right = 34.0
+margin_bottom = 63.0
+theme = SubResource( 1 )
+max_value = 0.0
+
+[node name="Nemico" type="Sprite" parent="."]
+position = Vector2( 330, 0 )
+scale = Vector2( 2.14516, 1 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="ProgressBar" type="ProgressBar" parent="Nemico"]
+margin_left = -28.4361
+margin_top = 43.0
+margin_right = 27.5639
+margin_bottom = 57.0
