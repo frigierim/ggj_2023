@@ -1,0 +1,21 @@
+{
+	"color": "#ffff0000",
+	"description": "Programmatore Godot",
+	"display_name": "",
+	"display_name_bool": false,
+	"id": "character-1675447672.json",
+	"mirror_portraits": false,
+	"name": "Chicco",
+	"nickname": "",
+	"nickname_bool": false,
+	"offset_x": 100,
+	"offset_y": 0,
+	"portraits": [
+		{
+			"name": "Default",
+			"path": "res://addons/dialogic/Example Assets/portraits/df-1.png"
+		}
+	],
+	"scale": 78,
+	"theme": ""
+}
