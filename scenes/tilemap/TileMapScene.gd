@@ -244,6 +244,8 @@ func _handle_new_position(x: int, y: int):
 				pass
 				
 			"neutral_end":
+				var EndingScene = Dialogic.start('EndingScene')
+				add_child(EndingScene)
 				pass
 				
 			_:
