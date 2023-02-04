@@ -42,7 +42,7 @@ func show_than_hide_box_attack3():
 func _on_sword_pressed() -> void:
 	if (turno == false and canAttack == true):
 		canAttack = false
-		alleato.combat("Alleato con spada")
+		alleato.attack(turno)
 		nemico.vita -= 25
 		show_than_hide_box_attack1()
 		yield(get_tree().create_timer(4.0), "timeout")
@@ -52,8 +52,8 @@ func _on_sword_pressed() -> void:
 func _on_fist_pressed() -> void:
 	if (turno == false and canAttack == true):
 		canAttack = false
-		alleato.combat("Alleato con pugno")
 		nemico.vita -= 15
+		alleato.attack(turno)
 		show_than_hide_box_attack2()
 		yield(get_tree().create_timer(4.0), "timeout")
 		turno = true
@@ -62,12 +62,11 @@ func _on_fist_pressed() -> void:
 func _on_warhead_pressed() -> void:
 	if (turno == false and canAttack == true):
 		canAttack = false
-		alleato.combat("Alleato con testata")
 		nemico.vita -= 5
+		alleato.attack(turno)
 		show_than_hide_box_attack3()
 		yield(get_tree().create_timer(4.0), "timeout")
 		turno = true
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -75,21 +74,25 @@ func _process(_delta):
 	if (alleato.vita > 0):
 		if(numero_attacco == 1):
 			if(turno == true):
-				nemico.combat("Nemico con 1")
+				nemico.attack(turno)
 				alleato.vita -= 10
 				turno = false
 				canAttack = true
 			
 		if(numero_attacco == 2):
 			if(turno == true):
-				nemico.combat("Nemico con 2")
+				nemico.attack(turno)
 				alleato.vita -= 5
 				turno = false
 				canAttack = true
 			
 		if(numero_attacco == 3):
 			if(turno == true):
-				nemico.combat("Nemico con 3")
+				nemico.attack(turno)
 				alleato.vita -= 3
 				turno = false
 				canAttack = true
+				
+	if(nemico.vita <= 0):
+		print("Hai vinto")
+		canAttack = false
