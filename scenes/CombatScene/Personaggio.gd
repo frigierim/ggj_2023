@@ -78,9 +78,9 @@ func _process(delta):
 		isDead = false
 		opacity = 1
 		hit.visible = false
-		while(opacity > 0.1):
+		while(opacity >= 0.1):
 			self.modulate.a = opacity
-			yield(get_tree().create_timer(0.04), "timeout")
+			yield(get_tree().create_timer(0.01), "timeout")
 			opacity -= 0.01
 		self.visible = false
 		
