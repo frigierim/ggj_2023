@@ -1,0 +1,54 @@
+{
+	"events": [
+		{
+			"background": "res://documentazione/Art/Combat Backgrounds/RootsBase.png",
+			"event_id": "dialogic_021"
+		},
+		{
+			"character": "character-1675505738.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "- With Nidhogg repelled, Durinn is finally free to roam the human realm. Although he can now be away from the gloom of Nidavellir, enjoying the beautiful work of art the gods composed out of the corpse of Ymir, a question remains with him still. -"
+		},
+		{
+			"animation": "slide_in_right.gd",
+			"animation_length": 5,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Default",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
+		},
+		{
+			"event_id": "dialogic_023",
+			"hide_dialogbox": true,
+			"wait_seconds": 5
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "“Is this where I wanted to go?”"
+		},
+		{
+			"event_id": "dialogic_022",
+			"transition_duration": 1
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.4.5",
+		"file": "timeline-1675510249.json",
+		"name": "Ending Scene"
+	}
+}

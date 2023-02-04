@@ -1,0 +1,86 @@
+{
+	"events": [
+		{
+			"background": "res://documentazione/Art/Combat Backgrounds/Roots1.png",
+			"event_id": "dialogic_021"
+		},
+		{
+			"animation": "1-fade_in.gd",
+			"animation_length": 2,
+			"animation_wait": true,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Default",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "\"...\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "\"I can't believe this.\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "\"Who the hell would leave a rune of light lying around here?\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "\"What do they even think these are?! They're secret words of power, not some copper coin that fell out of your pocket and didn't bother to pick up!\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "\"I don't get it, who would – hold on.\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "It was so high up... I bet it was some jotunn."
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "\"...\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "“Oh, they're gonna get it now.”"
+		},
+		{
+			"event_id": "dialogic_022",
+			"transition_duration": 1
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.4.5",
+		"file": "timeline-1675508247.json",
+		"name": "Event 1 K"
+	}
+}

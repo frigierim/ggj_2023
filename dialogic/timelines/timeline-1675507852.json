@@ -1,0 +1,105 @@
+{
+	"events": [
+		{
+			"background": "res://documentazione/Art/Combat Backgrounds/RootsBase.png",
+			"event_id": "dialogic_021"
+		},
+		{
+			"animation": "1-fade_in.gd",
+			"animation_length": 0,
+			"animation_wait": false,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Durinn Full",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
+		},
+		{
+			"animation": "1-fade_in.gd",
+			"animation_length": 0,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675522403.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Default",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "Durinn Full",
+			"text": "\"Dammit, I'm being targeted by this scum now that I'm stumbling around in the dark.\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "Durinn Full",
+			"text": "\"If there was some ground I could at least tell which way I should go, but these roots are nightmarishly hard to navigate without a light.\""
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "Durinn Full",
+			"text": "\"I can't even write a decent rune in these conditions. Hm?\""
+		},
+		{
+			"background": "res://documentazione/Art/Combat Backgrounds/Roots1.png",
+			"event_id": "dialogic_021"
+		},
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "theme-1675525020.cfg"
+		},
+		{
+			"character": "character-1675522403.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "Durinn notices a tiny light nestled between two high roots in the distance."
+		},
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "default-theme.cfg"
+		},
+		{
+			"event_id": "dialogic_023",
+			"hide_dialogbox": true,
+			"wait_seconds": 1
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "Durinn Full",
+			"text": "\"Wait, is my eye deceiving me? Is that light coming from up there?\""
+		},
+		{
+			"event_id": "dialogic_022",
+			"transition_duration": 1
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.4.5",
+		"file": "timeline-1675507852.json",
+		"name": "First Battle K"
+	}
+}

@@ -1,0 +1,94 @@
+{
+	"events": [
+		{
+			"background": "res://documentazione/Art/Combat Backgrounds/RootsBase.png",
+			"event_id": "dialogic_021"
+		},
+		{
+			"animation": "2-fade_in_up.gd",
+			"animation_length": 0,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675522403.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Default",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
+		},
+		{
+			"animation": "2-fade_in_up.gd",
+			"animation_length": 0,
+			"animation_wait": true,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Default",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "Default",
+			"text": "“I sense some dwarven craftmanship around here.”"
+		},
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "theme-1675525020.cfg"
+		},
+		{
+			"character": "character-1675522403.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "- A weapon lays half-buried in the roots of the World-Tree, the fact that it was able to harm it marking it as an extraordinary piece of work. -"
+		},
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "default-theme.cfg"
+		},
+		{
+			"character": "character-1675505431.json",
+			"event_id": "dialogic_001",
+			"portrait": "Default",
+			"text": "“I wonder where its owner went. Oh well, I at least won't abandon it in this Vanir-forsaken place.”"
+		},
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "theme-1675525020.cfg"
+		},
+		{
+			"character": "character-1675525764.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "- Durinn unlocked a new attack option -"
+		},
+		{
+			"event_id": "dialogic_022",
+			"transition_duration": 1
+		}
+	],
+	"metadata": {
+		"dialogic-version": "1.4.5",
+		"file": "timeline-1675507891.json",
+		"name": "Weapon Found K"
+	}
+}

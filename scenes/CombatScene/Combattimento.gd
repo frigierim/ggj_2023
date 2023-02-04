@@ -51,6 +51,9 @@ func _on_Hammer_pressed():
 # Spear Attack
 func _on_Spear_pressed():
 	attack("spear")
+	
+func backToMap():
+	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -65,3 +68,5 @@ func _process(_delta):
 	if(nemico.vita <= 0):
 		canAttack = false
 		nemico.dead()
+		yield(get_tree().create_timer(4), "timeout")
+		backToMap()
