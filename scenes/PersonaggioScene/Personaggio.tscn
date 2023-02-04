@@ -57,15 +57,14 @@ flip_h = true
 
 [node name="Hit Popup" type="Label" parent="VBoxContainer/CenterContainer/Personaggio"]
 unique_name_in_owner = true
+visible = false
 show_behind_parent = true
-anchor_left = 0.532
-anchor_top = 0.165
-anchor_right = 0.532
-anchor_bottom = 0.165
-margin_left = -537.0
-margin_top = -765.5
-margin_right = -371.0
-margin_bottom = -710.5
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -333.0
+margin_top = -250.0
+margin_right = -167.0
+margin_bottom = -195.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "-100"
