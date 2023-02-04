@@ -169,23 +169,46 @@ func _handle_new_position(x: int, y: int):
 		var tile = scripts_map.tile_set.tile_get_name(cell_id)
 		match tile:
 				
+			"start":
+				#TODO: Show dialog
+				pass
+				
 			"end":
-				print("End reached!")
+				#TODO: Show dialog
+				print("Game over!")
 				
 			"health":
-				print("Health improved")
+				GameStatus.collect_healing()
+				#TODO: Show dialog
 				
 			"weapon":
-				print("Weapon collected!")
+				GameStatus.collect_weapon()
+				#TODO: Show dialog
 				
-			"scripted_enemy":
-				print("Scripted enemy!")
-			
-		
-			# No specific script found, verify encounter
-			_:
+			"first_enemy":
+				#TODO: Show dialog
 				pass
-	else:		
+			
+			"light_rune":
+				#TODO: show dialog
+				GameStatus.collect_light_rune()
+				
+			"pre_boss":
+				#TODO: show dialog
+				pass
+				
+			"boss":
+				#TODO: show dialog
+				#TODO: enter boss battle
+				pass
+				
+			"neutral_end":
+				pass
+				
+			_:
+				assert(false)
+	else:
+		# No specific script found, verify encounter
 		if randf() < spawn_pct:
 			# Random encounter: set up enemies and trigger battle scene
 			print("Fighting enemies")
