@@ -20,59 +20,37 @@ func _num():
 func _ready():
 	pass
 	
-# Headbutt Attack
-func _on_Headbutt_pressed():
+func attack(weapon):
 	if (turno == false and canAttack == true):
 		canAttack = false
 		alleato.attack(turno)
-		nemico.vita -= GameStatus.getDamage("Headbutt", nemico.enemy_type)
-		yield(get_tree().create_timer(4.0), "timeout")
+		nemico.vita -= GameStatus.getDamage(weapon, nemico.enemy_type)
+		yield(get_tree().create_timer(2.0), "timeout")
 		turno = true
+		
+# Headbutt Attack
+func _on_Headbutt_pressed():
+	attack("Headbutt")
 		
 # Hatchet Attack
 func _on_Hatchet_pressed():
-	if (turno == false and canAttack == true):
-		canAttack = false
-		alleato.attack(turno)
-		nemico.vita -= GameStatus.getDamage("Hatchet", nemico.enemy_type)
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
+	attack("Hatchet")
 		
 # Two-Headed Axe Attack
 func _on_2H_Axe_pressed():
-	if (turno == false and canAttack == true):
-		canAttack = false
-		alleato.attack(turno)
-		nemico.vita -= GameStatus.getDamage("Two-Headed Axe", nemico.enemy_type)
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
+	attack("Two-Headed Axe")
 		
 # Sword Attack
 func _on_Sword_pressed():
-	if (turno == false and canAttack == true):
-		canAttack = false
-		alleato.attack(turno)
-		nemico.vita -= GameStatus.getDamage("Sword", nemico.enemy_type)
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
+	attack("Sword")
 		
 # Hammer attack
 func _on_Hammer_pressed():
-	if (turno == false and canAttack == true):
-		canAttack = false
-		alleato.attack(turno)
-		nemico.vita -= GameStatus.getDamage("Hammer", nemico.enemy_type)
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
+	attack("Hammer")
 		
 # Spear Attack
 func _on_Spear_pressed():
-	if (turno == false and canAttack == true):
-		canAttack = false
-		alleato.attack(turno)
-		nemico.vita -= GameStatus.getDamage("Spear", nemico.enemy_type)
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
+	attack("Spear")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
