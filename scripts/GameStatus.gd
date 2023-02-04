@@ -73,7 +73,7 @@ var weapons_matrix : Dictionary = {
 
 func _ready():
 	reset(Vector2.ZERO)
-		
+
 func save_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
@@ -140,7 +140,6 @@ func _calc_damage(base : float, miss_rate : float, variance : float):
 		return base + (base * variance * rand_range(-1.0, +1.0))
 
 func getDamage(weapon : String, enemy : String):
-	
 	if weapons_matrix.has(weapon):
 		
 		var weapon_stats = weapons_matrix[weapon]
