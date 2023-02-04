@@ -9,14 +9,16 @@ onready var scripts_map = $"%ScriptsMap"
 const MAP_H = 21
 const MAP_W = 21
 
-const MAP_MIN_X = 2
-const MAP_MAX_X = 19
-const MAP_MIN_Y = 2
-const MAP_MAX_Y = 19
+const MAP_MIN_X = 0
+const MAP_MAX_X = 50
+const MAP_MIN_Y = 0
+const MAP_MAX_Y = 64
 
 const TILE_H : int = 16
 const TILE_W : int = 16
+
 const TILE_ID_BACK : int = 20
+const TILE_ID_EMPTY : int = -1
 
 var position_x : int = 0
 var position_y : int = 0
@@ -40,7 +42,12 @@ func _ready():
 	
 	var ratio = min(Game.size.x / MAP_W, Game.size.y / MAP_H)
 	fog.material.set_shader_param("ratio", ratio)
+	
 	fog.visible = true
+	
+	# The game map is used only as a reference, but we show the underlying image
+	game_map.visible = false
+	
 	_moving = false
 	parse_map()
 
@@ -59,18 +66,24 @@ func parse_map():
 
 	for j in range(MAP_MAX_Y):
 		for i in range(MAP_MAX_X):
+			
+			# use the visible map to cover areas not yet met before the light rune
+			visible_map.set_cell(i, j, TILE_ID_BACK)
+			
 			var cell_id = scripts_map.get_cell(i, j)
 			if cell_id != -1:
+				
 				var tile = scripts_map.tile_set.tile_get_name(cell_id)
 				match tile:
 					"start":
+						
 						position_x = i
 						position_y = j
 						player.position = Vector2(position_x * TILE_W, position_y * TILE_H)
-						_update_fog_position(player.position)
-						_light_tile(position_x, position_y)
-
-
+						
+						
+	_update_fog_position(player.position)
+	_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 	
 
 func _check_position(x : int, y : int) -> bool:
@@ -88,17 +101,12 @@ func _update_fog_position(pos : Vector2):
 	fog.material.set_shader_param("center_y", uv.y)
 	
 
-func _light_tile(x : int, y : int):
-	if not illumination:
-		return
-		
+func _fill_tile(x : int, y : int, cell_id : int):
+
 	for j in range(clamp(y - 1, 0, MAP_MAX_Y), clamp(y + 1, 0, MAP_MAX_Y) + 1):
 		for i in range(clamp(x - 1, 0, MAP_MAX_X), clamp(x + 1, 0, MAP_MAX_X) + 1):
-			var cell_id = game_map.get_cell(i, j)
-			if cell_id != TILE_ID_BACK:
-				visible_map.set_cell(i, j, cell_id)
-			else:
-				visible_map.set_cell(i, j, -1)
+			visible_map.set_cell(i, j, cell_id)
+
 	
 func _translate(x : int, y : int):
 	
@@ -111,11 +119,17 @@ func _translate(x : int, y : int):
 		tweener.connect("finished", self, "_on_movement_finished")
 		tweener.tween_property(player, "position", Vector2(_target_x * TILE_W, _target_y * TILE_H), 0.3)
 		tweener.tween_method(self, "_update_fog_position", player.position, Vector2(_target_x * TILE_W, _target_y * TILE_H), 0.3)
-
+		# Make the destination tile visible
+		_fill_tile(_target_x, _target_y, TILE_ID_EMPTY)
+	
 func _on_movement_finished():
+	
+	if not illumination:
+		_fill_tile(position_x, position_y, TILE_ID_BACK)
+		
 	position_x = _target_x
 	position_y = _target_y
-	_light_tile(position_x, position_y)
+	_fill_tile(_target_x, _target_y, TILE_ID_EMPTY)
 	
 	_handle_new_position(position_x, position_y)
 		

@@ -73,19 +73,16 @@ var weapons_matrix : Dictionary = {
 
 func _ready():
 	reset(Vector2.ZERO)
-	
-func getDamage(weapon, enemy_name):
-	return 20
-	
+		
 func save_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
 		if _savefile.load(SAVEFILE_PATH):
-			light_rune_found = _savefile.get_value("light_rune_found", false)
-			player_hp = _savefile.get_value("player_hp", INITIAL_HP) 
-			weapon_level = _savefile.get_value("weapon_level", 0)
-			heal_level = _savefile.get_value("heal_level", 0)
-			player_position = _savefile.get_value("player_position", Vector2(0,0))
+			light_rune_found = _savefile.get_value("game", "light_rune_found", false)
+			player_hp = _savefile.get_value("game", "player_hp", INITIAL_HP) 
+			weapon_level = _savefile.get_value("game", "weapon_level", 0)
+			heal_level = _savefile.get_value("game", "heal_level", 0)
+			player_position = _savefile.get_value("game", "player_position", Vector2(0,0))
 			
 func is_savegame_present() -> bool:
 	var f = File.new()
@@ -99,11 +96,11 @@ func clear_gamestate():
 func load_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
-		_savefile.set_value("light_rune_found", light_rune_found)
-		_savefile.set_value("player_hp", player_hp) 
-		_savefile.get_value("weapon_level", weapon_level)
-		_savefile.get_value("heal_level", heal_level)
-		_savefile.get_value("player_position", player_position)
+		_savefile.set_value("game", "light_rune_found", light_rune_found)
+		_savefile.set_value("game", "player_hp", player_hp) 
+		_savefile.get_value("game", "weapon_level", weapon_level)
+		_savefile.get_value("game", "heal_level", heal_level)
+		_savefile.get_value("game", "player_position", player_position)
 		_savefile.save(SAVEFILE_PATH)
 			
 	
@@ -114,6 +111,7 @@ func reset(initial_position : Vector2):
 	player_hp = INITIAL_HP
 	weapon_level = 0
 	heal_level = 0
+	player_position = initial_position
 	
 func collect_weapon():
 	weapon_level += 1
@@ -149,7 +147,7 @@ func getDamage(weapon : String, enemy : String):
 		if weapon_stats.has("multiplier"):
 			var multiplier : float = 1.0
 			if weapon_stats["multiplier"] is Dictionary:
-				if weapon_stats["multiplier"].has["enemy"]:
+				if weapon_stats["multiplier"].has(enemy):
 					multiplier = weapon_stats["multiplier"]["enemy"]
 			
 			elif weapon_stats["multiplier"] is float:
