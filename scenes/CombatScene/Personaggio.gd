@@ -83,6 +83,3 @@ func _process(delta):
 			yield(get_tree().create_timer(0.01), "timeout")
 			opacity -= 0.01
 		self.visible = false
-		
-
-
