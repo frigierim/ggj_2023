@@ -68,10 +68,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ExitButton" type="Button" parent="VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="VBoxContainer"]
 margin_top = 86.0
 margin_right = 200.0
-margin_bottom = 156.0
+margin_bottom = 126.0
+text = "RESUME"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
+margin_top = 142.0
+margin_right = 200.0
+margin_bottom = 212.0
 rect_min_size = Vector2( 200, 70 )
 focus_neighbour_top = NodePath("../PlayButton")
 focus_previous = NodePath("../PlayButton")

@@ -13,6 +13,64 @@ var healing_progression : Array = [100, 110, 130, 170, 210, 260 ]
 
 var _savefile = null
 
+const BASE_DAMAGE = 100.0
+
+var weapons_matrix : Dictionary = {
+	
+	"headbutt" : {
+		"multiplier" : 0.8,
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+		
+	},
+	"hatchet" : {
+		"multiplier" : 1.0,
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+	
+	"two_headed axe" : 
+	{
+		"multiplier" :
+			{
+				"snakes" : 1.5
+			},
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+	
+	"sword" : 
+	{
+		"multiplier" :
+			{
+				"ulfsarks" : 1.5
+			},
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+
+	"hammer" : 
+	{
+		"multiplier" :
+			{
+				"jotunn" : 1.5
+			},
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+	
+	"spear" : 
+	{
+		"multiplier" :
+			{
+				"nidhogg" : 1.5
+			},
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	}
+		
+}
+
 func _ready():
 	reset(Vector2.ZERO)
 	
@@ -71,6 +129,34 @@ func collect_light_rune():
 func set_position(pos : Vector2):
 	player_position = pos
 	save_gamestate()
+
+func _calc_damage(base : float, miss_rate : float, variance : float):
+	var missed : bool  = randf() <= miss_rate
 	
+	if missed:
+		return 0
+	else:
+		return base + (base * variance * rand_range(-1.0, +1.0))
 
-
+func getDamage(weapon : String, enemy : String):
+	
+	if weapons_matrix.has(weapon):
+		
+		var weapon_stats = weapons_matrix[weapon]
+		if weapon_stats.has("multiplier"):
+			var multiplier : float = 1.0
+			if weapon_stats["multiplier"] is Dictionary:
+				if weapon_stats["multiplier"].has["enemy"]:
+					multiplier = weapon_stats["multiplier"]["enemy"]
+			
+			elif weapon_stats["multiplier"] is float:
+				multiplier = weapon_stats["multiplier"]
+			else:
+				assert(false)
+				
+			return _calc_damage(BASE_DAMAGE * multiplier, weapon_stats["miss_rate"], weapon_stats["variance"])
+		
+	assert(false)
+	return BASE_DAMAGE
+	
+	
