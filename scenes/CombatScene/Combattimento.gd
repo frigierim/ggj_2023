@@ -6,8 +6,8 @@ onready var alleato = get_node("%Alleato")
 # Variabili
 var canAttack:bool = true
 var damage:float = 0
-var turno:bool = false
 var finished:bool = false
+var turno:bool = false
 #true -> turno nemico
 #false -> turno alleato
 
