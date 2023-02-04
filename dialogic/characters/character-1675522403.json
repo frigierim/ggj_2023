@@ -1,0 +1,21 @@
+{
+	"color": "#ffffffff",
+	"description": "narrator",
+	"display_name": "",
+	"display_name_bool": false,
+	"id": "character-1675522403.json",
+	"mirror_portraits": false,
+	"name": " ",
+	"nickname": "",
+	"nickname_bool": false,
+	"offset_x": 0,
+	"offset_y": 0,
+	"portraits": [
+		{
+			"name": "Default",
+			"path": "res://documentazione/Art/CharArt/Durinn Full.png"
+		}
+	],
+	"scale": 100,
+	"theme": ""
+}
