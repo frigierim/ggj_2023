@@ -19,9 +19,9 @@ var turno:bool = false
 #true -> nemico
 #false -> alleato
 
-func attack(turno):
+func attack(turn):
 	isAttacking = true
-	self.turno = turno
+	self.turno = turn
 	
 func damage(damage:int):
 	hit.text = String(-(damage + 1))
@@ -49,12 +49,12 @@ func _process(delta):
 	if(isAttacking == true):
 		isAttacking = false
 		set_velocita()
-		for i in range(1, 100):
+		for _i in range(1, 100):
 			self.rect_position += velocita * delta
 		yield(get_tree().create_timer(0.2), "timeout")
 		turno = !turno
 		set_velocita()
-		for i in range(1, 100):
+		for _i in range(1, 100):
 			self.rect_position += velocita * delta
 			
 	if(isDamage == true):
