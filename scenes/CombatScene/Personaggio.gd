@@ -13,6 +13,6 @@ func _ready():
 	$ProgressBar.value = vita
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	$ProgressBar.value = vita
 

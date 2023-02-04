@@ -56,7 +56,7 @@ func _on_warhead_pressed() -> void:
 		turno = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var numero_attacco:int = choice.randf_range(1, 3.9)
 	if ($Alleato.vita > 0):
 		if(numero_attacco == 1):
