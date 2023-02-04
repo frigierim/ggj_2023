@@ -111,6 +111,7 @@ Game="*res://addons/game-template/game.gd"
 Transitions="*res://addons/game-template/transition/transition.tscn"
 Utils="*res://addons/game-template/utils.gd"
 Audio="*res://addons/game-template/audio.gd"
+GameStatus="*res://scripts/GameStatus.gd"
 
 [category]
 
