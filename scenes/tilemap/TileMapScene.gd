@@ -84,7 +84,12 @@ func parse_map():
 						
 						position_x = i
 						position_y = j
-						player.position = Vector2(position_x * TILE_W, position_y * TILE_H)
+						
+						if GameStatus.player_position == Vector2(-1,-1):
+							player.position = Vector2(position_x * TILE_W, position_y * TILE_H)
+						else:
+							player.position = GameStatus.player_position
+							
 						
 						
 	_update_fog_position(player.position)
@@ -187,6 +192,13 @@ func _handle_new_position(x: int, y: int):
 	# Check for scripted encounters
 	var cell_id = scripts_map.get_cell(x, y)
 	if cell_id != -1:
+		
+		if GameStatus.is_event_collected(Vector2(x,y)):
+			# we've already been here
+			return
+
+		GameStatus.collect_event(Vector2(x,y))
+		
 		var tile = scripts_map.tile_set.tile_get_name(cell_id)
 		match tile:
 				
@@ -229,6 +241,7 @@ func _handle_new_position(x: int, y: int):
 				
 			_:
 				assert(false)
+	
 	else:
 		# No specific script found, verify encounter
 		if randf() < spawn_pct:
