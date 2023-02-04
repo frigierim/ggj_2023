@@ -19,52 +19,58 @@ func _num():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-
-# Mostra scritta attacco 1
-func show_than_hide_box_attack1():
-	attack1.visible = true
-	yield(get_tree().create_timer(1.0), "timeout")
-	attack1.visible = false
-
-# Mostra scritta attacco 2
-func show_than_hide_box_attack2():
-	attack2.visible = true
-	yield(get_tree().create_timer(1.0), "timeout")
-	attack2.visible = false
 	
-# Mostra scritta attacco 3
-func show_than_hide_box_attack3():
-	attack3.visible = true
-	yield(get_tree().create_timer(1.0), "timeout")
-	attack3.visible = false
-
-# Attacco spada
-func _on_sword_pressed() -> void:
+# Headbutt Attack
+func _on_Headbutt_pressed():
 	if (turno == false and canAttack == true):
 		canAttack = false
 		alleato.attack(turno)
-		nemico.vita -= 100
-		show_than_hide_box_attack1()
+		nemico.vita -= GameStatus.getDamage("Headbutt", nemico.enemy_type)
 		yield(get_tree().create_timer(4.0), "timeout")
 		turno = true
-
-# Attacco pugno
-func _on_fist_pressed() -> void:
+		
+# Hatchet Attack
+func _on_Hatchet_pressed():
 	if (turno == false and canAttack == true):
 		canAttack = false
-		nemico.vita -= 15
 		alleato.attack(turno)
-		show_than_hide_box_attack2()
+		nemico.vita -= GameStatus.getDamage("Hatchet", nemico.enemy_type)
 		yield(get_tree().create_timer(4.0), "timeout")
 		turno = true
-
-# Attaccato testata
-func _on_warhead_pressed() -> void:
+		
+# Two-Headed Axe Attack
+func _on_2H_Axe_pressed():
 	if (turno == false and canAttack == true):
 		canAttack = false
-		nemico.vita -= 5
 		alleato.attack(turno)
-		show_than_hide_box_attack3()
+		nemico.vita -= GameStatus.getDamage("Two-Headed Axe", nemico.enemy_type)
+		yield(get_tree().create_timer(4.0), "timeout")
+		turno = true
+		
+# Sword Attack
+func _on_Sword_pressed():
+	if (turno == false and canAttack == true):
+		canAttack = false
+		alleato.attack(turno)
+		nemico.vita -= GameStatus.getDamage("Sword", nemico.enemy_type)
+		yield(get_tree().create_timer(4.0), "timeout")
+		turno = true
+		
+# Hammer attack
+func _on_Hammer_pressed():
+	if (turno == false and canAttack == true):
+		canAttack = false
+		alleato.attack(turno)
+		nemico.vita -= GameStatus.getDamage("Hammer", nemico.enemy_type)
+		yield(get_tree().create_timer(4.0), "timeout")
+		turno = true
+		
+# Spear Attack
+func _on_Spear_pressed():
+	if (turno == false and canAttack == true):
+		canAttack = false
+		alleato.attack(turno)
+		nemico.vita -= GameStatus.getDamage("Spear", nemico.enemy_type)
 		yield(get_tree().create_timer(4.0), "timeout")
 		turno = true
 
