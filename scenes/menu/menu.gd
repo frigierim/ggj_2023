@@ -1,6 +1,9 @@
 extends Control
 
 func _ready():
+	
+	randomize()
+	
 	$Version/GameVersion.text = ProjectSettings.get_setting("application/config/version")
 	$Version/GodotVersion.text = "Godot %s" % Engine.get_version_info().string
 	# needed for gamepads to work
@@ -16,7 +19,7 @@ func _on_PlayButton_pressed() -> void:
 		show_progress_bar = true,
 		"a_number": 10,
 	}
-	Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
+	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn", params)
 
 
 func _on_ExitButton_pressed() -> void:
