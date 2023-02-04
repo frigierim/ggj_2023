@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/tilemap/TileMap.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap/TileMapScene.gd" type="Script" id=2]
-[ext_resource path="res://assets/sprites/icon.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/durinn.png" type="Texture" id=3]
 [ext_resource path="res://scenes/tilemap/ScriptTileset.tres" type="TileSet" id=4]
 [ext_resource path="res://assets/map.png" type="Texture" id=5]
 
@@ -47,7 +47,7 @@ tile_data = PoolIntArray( 0, 21, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 2
 
 [node name="Player" type="Sprite" parent="."]
 unique_name_in_owner = true
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 3 )
 centered = false
 
