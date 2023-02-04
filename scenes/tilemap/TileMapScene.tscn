@@ -75,6 +75,7 @@ self_modulate = Color( 1, 1, 1, 0.913725 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
+tile_data = PoolIntArray( 1, 0, 0 )
 
 [node name="ScriptsMap" type="TileMap" parent="."]
 unique_name_in_owner = true
