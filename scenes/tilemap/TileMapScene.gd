@@ -203,8 +203,9 @@ func _handle_new_position(x: int, y: int):
 		match tile:
 				
 			"start":
-				#TODO: Show dialog
-				pass
+				
+				var StartScene = Dialogic.start('StartingScene')
+				add_child(StartScene)
 				
 			"end":
 				#TODO: Show dialog
@@ -212,27 +213,32 @@ func _handle_new_position(x: int, y: int):
 				
 			"health":
 				GameStatus.collect_healing()
-				#TODO: Show dialog
+				var HealScene = Dialogic.start('HealScene')
+				add_child(HealScene)
 				
 			"weapon":
 				GameStatus.collect_weapon()
-				#TODO: Show dialog
+				var WeaponScene = Dialogic.start('WeaponScene')
+				add_child(WeaponScene)
 				
 			"first_enemy":
-				#TODO: Show dialog
+				var FirstBattle = Dialogic.start('FirstBattle')
+				add_child(FirstBattle)
 				pass
 			
 			"light_rune":
-				#TODO: show dialog
+				var FirstEvent = Dialogic.start('FirstEvent')
+				add_child(FirstEvent)
+				
 				GameStatus.collect_light_rune()
 				illumination = true
 				
 			"pre_boss":
-				#TODO: show dialog
-				pass
-				
+				var BBWarning = Dialogic.start('BBWarning')
+				add_child(BBWarning)
 			"boss":
-				#TODO: show dialog
+				var BossBattleScene = Dialogic.start('BossBattleScene')
+				add_child(BossBattleScene)
 				#TODO: enter boss battle
 				pass
 				
