@@ -74,9 +74,6 @@ var weapons_matrix : Dictionary = {
 func _ready():
 	reset(Vector2.ZERO)
 	
-func getDamage(weapon, enemy_name):
-	return 20
-	
 func save_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
@@ -142,15 +139,14 @@ func _calc_damage(base : float, miss_rate : float, variance : float):
 		return base + (base * variance * rand_range(-1.0, +1.0))
 
 func getDamage(weapon : String, enemy : String):
-	
 	if weapons_matrix.has(weapon):
 		
 		var weapon_stats = weapons_matrix[weapon]
 		if weapon_stats.has("multiplier"):
 			var multiplier : float = 1.0
 			if weapon_stats["multiplier"] is Dictionary:
-				if weapon_stats["multiplier"].has["enemy"]:
-					multiplier = weapon_stats["multiplier"]["enemy"]
+				if weapon_stats["multiplier"].has(enemy):
+					multiplier = weapon_stats["multiplier"][enemy]
 			
 			elif weapon_stats["multiplier"] is float:
 				multiplier = weapon_stats["multiplier"]
