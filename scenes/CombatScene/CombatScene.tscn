@@ -1,8 +1,39 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/PersonaggioScene/Personaggio.tscn" type="PackedScene" id=1]
 [ext_resource path="res://documentazione/Art/Combat Backgrounds/Roots0.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/White Storm.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://scenes/CombatScene/Combattimento.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 36
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 36
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 36
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 36
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 36
+extra_spacing_char = 2
+font_data = ExtResource( 3 )
 
 [node name="Combattimento" type="MarginContainer"]
 anchor_right = 1.0
@@ -27,7 +58,7 @@ size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="MainContainer/ContainerAlleato"]
 margin_right = 958.0
-margin_bottom = 1056.0
+margin_bottom = 929.0
 rect_min_size = Vector2( 64, 64 )
 rect_pivot_offset = Vector2( 1961, 1241 )
 size_flags_horizontal = 3
@@ -40,55 +71,74 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 447.0
-margin_top = 496.0
+margin_top = 432.0
 margin_right = 511.0
-margin_bottom = 560.0
+margin_bottom = 496.0
 rect_pivot_offset = Vector2( 1729, 665 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="AttackContainer" type="HBoxContainer" parent="MainContainer/ContainerAlleato"]
-margin_top = 1060.0
+margin_top = 915.0
 margin_right = 958.0
 margin_bottom = 1080.0
 rect_pivot_offset = Vector2( 1175, 254 )
 size_flags_horizontal = 3
+custom_constants/separation = 10
 alignment = 1
 
-[node name="Headbutt" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer"]
-margin_left = 260.0
-margin_right = 331.0
-margin_bottom = 20.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/ContainerAlleato/AttackContainer"]
+margin_left = 74.0
+margin_right = 474.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 400, 0 )
+custom_constants/separation = 6
+
+[node name="Headbutt" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 45.0
+custom_fonts/font = SubResource( 1 )
 text = "Headbutt"
 
-[node name="Hatchet" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer"]
-margin_left = 335.0
-margin_right = 397.0
-margin_bottom = 20.0
+[node name="Hatchet" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer"]
+margin_top = 51.0
+margin_right = 400.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 2 )
 text = "Hatchet"
 
-[node name="2H_Axe" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer"]
-margin_left = 401.0
-margin_right = 520.0
-margin_bottom = 20.0
+[node name="2H_Axe" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer"]
+margin_top = 102.0
+margin_right = 400.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 3 )
 text = "Two-Headed Axe"
 
-[node name="Sword" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer"]
-margin_left = 524.0
-margin_right = 574.0
-margin_bottom = 20.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainContainer/ContainerAlleato/AttackContainer"]
+margin_left = 484.0
+margin_right = 884.0
+margin_bottom = 165.0
+rect_min_size = Vector2( 400, 0 )
+custom_constants/separation = 6
+
+[node name="Sword" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2"]
+margin_right = 400.0
+margin_bottom = 45.0
+custom_fonts/font = SubResource( 4 )
 text = "Sword"
 
-[node name="Hammer" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer"]
-margin_left = 578.0
-margin_right = 646.0
-margin_bottom = 20.0
+[node name="Hammer" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2"]
+margin_top = 51.0
+margin_right = 400.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 5 )
 text = "Hammer"
 
-[node name="Spear" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer"]
-margin_left = 650.0
-margin_right = 697.0
-margin_bottom = 20.0
+[node name="Spear" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2"]
+margin_top = 102.0
+margin_right = 400.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 6 )
 text = "Spear"
 
 [node name="ContainerNemico" type="CenterContainer" parent="MainContainer"]
@@ -118,9 +168,9 @@ margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/Headbutt" to="." method="_on_Headbutt_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/Hatchet" to="." method="_on_Hatchet_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/2H_Axe" to="." method="_on_2H_Axe_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/Sword" to="." method="_on_Sword_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/Hammer" to="." method="_on_Hammer_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/Spear" to="." method="_on_Spear_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer/Headbutt" to="." method="_on_Headbutt_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer/Hatchet" to="." method="_on_Hatchet_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer/2H_Axe" to="." method="_on_2H_Axe_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2/Sword" to="." method="_on_Sword_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2/Hammer" to="." method="_on_Hammer_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2/Spear" to="." method="_on_Spear_pressed"]
