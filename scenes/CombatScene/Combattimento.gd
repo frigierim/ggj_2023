@@ -7,6 +7,7 @@ onready var alleato = get_node("%Alleato")
 var canAttack:bool = true
 var damage:float = 0
 var turno:bool = false
+var finished:bool = false
 #true -> turno nemico
 #false -> turno alleato
 
@@ -53,7 +54,9 @@ func _on_Spear_pressed():
 	attack("spear")
 	
 func backToMap():
-	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn")
+	if(finished == false):
+		Game.change_scene("res://scenes/tilemap/TileMapScene.tscn")
+		finished = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

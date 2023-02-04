@@ -131,6 +131,10 @@ window/stretch/aspect="expand"
 
 enabled=PoolStringArray( "res://addons/dialogic/plugin.cfg", "res://addons/game-template/plugin.cfg" )
 
+[global]
+
+font=false
+
 [input]
 
 pause={
