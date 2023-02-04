@@ -3,9 +3,16 @@ extends Control
 onready var bar = get_node("%Bar")
 onready var hp = get_node("%hp")
 onready var hit = get_node("%Hit Popup")
+onready var personaggio = get_node("%Personaggio")
 
+var Images = {
+	"snakes" : preload("res://assets/Combat Sprites/Snakes.png"),
+	"ulfsarks" : preload("res://assets/Combat Sprites/Ulfsarks.png"),
+	"jotunn" : preload("res://assets/Combat Sprites/Jotunn.png"),
+	"nidhogg" : preload("res://documentazione/Characters/DurinnFaceBW.png")
+}
 # Statistiche
-export var enemy_type:String = "Alleato"
+export var enemy_type:String = "Alleato" setget set_enemy_type
 export var vita:int = 120
 var maxVita:int = vita
 
@@ -18,6 +25,15 @@ var opacity:float = 1
 var turno:bool = false
 #true -> nemico
 #false -> alleato
+
+func set_enemy_type(name:String):
+	enemy_type = name
+	if(Images.has(enemy_type)):
+		personaggio.set_texture(Images[enemy_type])
+		personaggio.set_flip_h(false)
+	else:
+		assert(false)
+	
 
 func attack(turn):
 	isAttacking = true
