@@ -1,0 +1,52 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+
+const float numOfBalls = 5.;										// number of balls
+const float distanceTraveled = 0.8;
+const float speed = .8;												// speed of effect
+const float rotationSpeed = .5;
+
+float metaballs(vec2 uv, float time) {									
+    float size = .9;												// base size
+    const float startIndex = numOfBalls;
+	const float endIndex = numOfBalls * 2.;
+    
+    for(float i = startIndex; i < endIndex; i++) {					// create x number of balls											// get rads for control point
+        float radius = distanceTraveled * sin(time + i * 2.);		// calculate radius
+        vec2 ball = radius * vec2(sin(i), cos(i));					// ball position
+		size += 1. / pow(i, distance(uv, ball));					// metaball calculation
+    }
+    return size;
+}
+
+void fragment()
+{
+    float rotationAngle = TIME * rotationSpeed;
+	mat2 rotation = mat2(vec2(cos(rotationAngle), -sin(rotationAngle)), 
+                         vec2(sin(rotationAngle),  cos(rotationAngle)));
+    
+    float time = TIME * speed;										// assigning time
+    vec2 R = vec2(10);
+    vec2 uv = (2. * UV - R) / R.y;							// center coordinates
+	uv *= 5.; 														// zoom out    
+    uv *= rotation;
+    float blob = metaballs(uv, time);								// creating the blob
+    float blob2 = metaballs(uv, time + 1.);							// offset blob
+    
+    //float mouseX =	(sin(TIME * 2.) / 2. + .5); 
+    
+    blob = smoothstep(1., 1. + 3./R.y, blob);						// Anti Aliasing based on resolution		
+    blob2 = smoothstep(1., 1. + 3./R.y, blob2);
+    
+    vec3 col = vec3(.5, 0.5, 0.5);									// color of blob					
+    
+    vec3 b1 = blob * col;											
+    vec3 b2 = blob2 * col;
+    vec3 final = max (b1, b2);										// combining the color with the effect
+    COLOR = vec4(final, 1); 									// ouput
+}
+
+"
