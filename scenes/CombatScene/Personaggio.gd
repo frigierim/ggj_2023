@@ -1,9 +1,10 @@
 extends Control
 
 onready var bar = get_node("%Bar")
-
 # Statistiche
+export var enemy_type:String = "Alleato"
 export var vita:int = 100
+
 var velocita:Vector2
 var VELK:float = 50.0
 var isAttacking:bool = false
@@ -51,7 +52,6 @@ func _process(delta):
 			self.modulate.a = opacity
 			yield(get_tree().create_timer(0.4), "timeout")
 			opacity -= 0.01
-			print(opacity)
 		self.modulate.a = 0
 		
 

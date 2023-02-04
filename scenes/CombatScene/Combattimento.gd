@@ -19,54 +19,38 @@ func _num():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-
-# Mostra scritta attacco 1
-func show_than_hide_box_attack1():
-	attack1.visible = true
-	yield(get_tree().create_timer(1.0), "timeout")
-	attack1.visible = false
-
-# Mostra scritta attacco 2
-func show_than_hide_box_attack2():
-	attack2.visible = true
-	yield(get_tree().create_timer(1.0), "timeout")
-	attack2.visible = false
 	
-# Mostra scritta attacco 3
-func show_than_hide_box_attack3():
-	attack3.visible = true
-	yield(get_tree().create_timer(1.0), "timeout")
-	attack3.visible = false
-
-# Attacco spada
-func _on_sword_pressed() -> void:
+func attack(weapon):
 	if (turno == false and canAttack == true):
 		canAttack = false
 		alleato.attack(turno)
-		nemico.vita -= 100
-		show_than_hide_box_attack1()
-		yield(get_tree().create_timer(4.0), "timeout")
+		nemico.vita -= GameStatus.getDamage(weapon, nemico.enemy_type)
+		yield(get_tree().create_timer(2.0), "timeout")
 		turno = true
-
-# Attacco pugno
-func _on_fist_pressed() -> void:
-	if (turno == false and canAttack == true):
-		canAttack = false
-		nemico.vita -= 15
-		alleato.attack(turno)
-		show_than_hide_box_attack2()
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
-
-# Attaccato testata
-func _on_warhead_pressed() -> void:
-	if (turno == false and canAttack == true):
-		canAttack = false
-		nemico.vita -= 5
-		alleato.attack(turno)
-		show_than_hide_box_attack3()
-		yield(get_tree().create_timer(4.0), "timeout")
-		turno = true
+		
+# Headbutt Attack
+func _on_Headbutt_pressed():
+	attack("Headbutt")
+		
+# Hatchet Attack
+func _on_Hatchet_pressed():
+	attack("Hatchet")
+		
+# Two-Headed Axe Attack
+func _on_2H_Axe_pressed():
+	attack("Two-Headed Axe")
+		
+# Sword Attack
+func _on_Sword_pressed():
+	attack("Sword")
+		
+# Hammer attack
+func _on_Hammer_pressed():
+	attack("Hammer")
+		
+# Spear Attack
+func _on_Spear_pressed():
+	attack("Spear")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

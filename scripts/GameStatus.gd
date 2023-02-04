@@ -74,6 +74,9 @@ var weapons_matrix : Dictionary = {
 func _ready():
 	reset(Vector2.ZERO)
 	
+func getDamage(weapon, enemy_name):
+	return 20
+	
 func save_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
