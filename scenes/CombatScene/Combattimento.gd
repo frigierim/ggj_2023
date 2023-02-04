@@ -71,5 +71,7 @@ func _process(_delta):
 	if(nemico.vita <= 0):
 		canAttack = false
 		nemico.dead()
-		yield(get_tree().create_timer(4), "timeout")
-		backToMap()
+		get_tree().create_timer(4).connect("timeout", self, "_on_nemico_dead")
+		
+func _on_nemico_dead():
+	backToMap()

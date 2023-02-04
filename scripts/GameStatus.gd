@@ -78,7 +78,7 @@ var collected_events : Dictionary = {}
 func _ready():
 	reset(Vector2(-1,-1))
 
-func save_gamestate():
+func load_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
 		if _savefile.load(SAVEFILE_PATH):
@@ -98,7 +98,7 @@ func clear_gamestate():
 		var dir = Directory.new()
 		dir.remove(SAVEFILE_PATH)
 	
-func load_gamestate():
+func save_gamestate():
 	_savefile = ConfigFile.new()
 	if _savefile != null:
 		_savefile.set_value("game", "light_rune_found", light_rune_found)

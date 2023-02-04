@@ -55,6 +55,7 @@ func _ready():
 	
 	_moving = false
 	parse_map()
+	_handle_new_position(position_x, position_y)
 
 
 func _set_illumination(new_value : bool):
