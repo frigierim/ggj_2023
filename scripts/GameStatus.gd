@@ -153,7 +153,7 @@ func getDamage(weapon : String, enemy : String):
 			var multiplier : float = 1.0
 			if weapon_stats["multiplier"] is Dictionary:
 				if weapon_stats["multiplier"].has(enemy):
-					multiplier = weapon_stats["multiplier"]["enemy"]
+					multiplier = weapon_stats["multiplier"][enemy]
 			
 			elif weapon_stats["multiplier"] is float:
 				multiplier = weapon_stats["multiplier"]
