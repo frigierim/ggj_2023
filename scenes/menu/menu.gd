@@ -19,7 +19,7 @@ func _on_PlayButton_pressed() -> void:
 		show_progress_bar = true,
 		"a_number": 10,
 	}
-	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn", params)
+	Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
 
 
 func _on_ExitButton_pressed() -> void:

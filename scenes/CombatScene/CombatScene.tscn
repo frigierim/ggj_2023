@@ -1,48 +1,66 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/pause_button.png" type="Texture" id=1]
+[ext_resource path="res://scenes/NemicoScene/Nemico.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/icon.png" type="Texture" id=2]
 [ext_resource path="res://scenes/CombatScene/Personaggio.gd" type="Script" id=3]
 [ext_resource path="res://scenes/CombatScene/Combattimento.gd" type="Script" id=4]
 
 [sub_resource type="Theme" id=1]
 
-[node name="Combattimento" type="Node2D"]
-position = Vector2( 376, 311 )
+[node name="Combattimento" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
 script = ExtResource( 4 )
 
-[node name="Alleato" type="Sprite" parent="."]
-position = Vector2( -79, -18 )
-texture = ExtResource( 2 )
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="ContainerAlleato" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 958.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/ContainerAlleato"]
+margin_right = 958.0
+margin_bottom = 1056.0
+rect_min_size = Vector2( 64, 64 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Alleato" type="Control" parent="HBoxContainer/ContainerAlleato/CenterContainer"]
+unique_name_in_owner = true
+margin_left = 447.0
+margin_top = 496.0
+margin_right = 511.0
+margin_bottom = 560.0
+rect_min_size = Vector2( 64, 64 )
 script = ExtResource( 3 )
 
-[node name="ProgressBar" type="ProgressBar" parent="Alleato"]
+[node name="Personaggio" type="Sprite" parent="HBoxContainer/ContainerAlleato/CenterContainer/Alleato"]
+texture = ExtResource( 2 )
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/ContainerAlleato/CenterContainer/Alleato/Personaggio"]
 margin_left = -35.0
 margin_top = 49.0
 margin_right = 34.0
 margin_bottom = 63.0
 theme = SubResource( 1 )
 
-[node name="Nemico" type="Sprite" parent="."]
-position = Vector2( 306.25, -9 )
-scale = Vector2( 1.47581, 1 )
-texture = ExtResource( 1 )
-script = ExtResource( 3 )
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ContainerAlleato"]
+margin_top = 1060.0
+margin_right = 958.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
 
-[node name="ProgressBar" type="ProgressBar" parent="Nemico"]
-margin_left = -28.4361
-margin_top = 43.0
-margin_right = 27.5639
-margin_bottom = 57.0
-
-[node name="sword" type="Button" parent="."]
-margin_left = -369.0
-margin_top = 163.0
-margin_right = -117.0
-margin_bottom = 287.0
+[node name="sword" type="Button" parent="HBoxContainer/ContainerAlleato/HBoxContainer"]
+margin_right = 61.0
+margin_bottom = 20.0
 text = "SWORD"
 
-[node name="attack1" type="Label" parent="sword"]
+[node name="attack1" type="Label" parent="HBoxContainer/ContainerAlleato/HBoxContainer/sword"]
+unique_name_in_owner = true
 visible = false
 margin_left = 620.0
 margin_top = -338.0
@@ -50,14 +68,14 @@ margin_right = 903.0
 margin_bottom = -214.0
 text = "MI HAI COLPITO CON UNA SPADATA"
 
-[node name="fist" type="Button" parent="."]
-margin_left = -115.0
-margin_top = 163.0
-margin_right = 124.0
-margin_bottom = 289.0
+[node name="fist" type="Button" parent="HBoxContainer/ContainerAlleato/HBoxContainer"]
+margin_left = 65.0
+margin_right = 126.0
+margin_bottom = 20.0
 text = "PUGNO"
 
-[node name="attack2" type="Label" parent="fist"]
+[node name="attack2" type="Label" parent="HBoxContainer/ContainerAlleato/HBoxContainer/fist"]
+unique_name_in_owner = true
 visible = false
 margin_left = 372.0
 margin_top = -340.0
@@ -65,14 +83,14 @@ margin_right = 588.0
 margin_bottom = -326.0
 text = "MI HAI COLPITO CON UN PUGNO"
 
-[node name="warhead" type="Button" parent="."]
-margin_left = 128.0
-margin_top = 163.0
-margin_right = 366.0
-margin_bottom = 289.0
+[node name="warhead" type="Button" parent="HBoxContainer/ContainerAlleato/HBoxContainer"]
+margin_left = 130.0
+margin_right = 195.0
+margin_bottom = 20.0
 text = "TESTATA"
 
-[node name="attack3" type="Label" parent="warhead"]
+[node name="attack3" type="Label" parent="HBoxContainer/ContainerAlleato/HBoxContainer/warhead"]
+unique_name_in_owner = true
 visible = false
 anchor_left = -0.124
 anchor_top = -0.397
@@ -87,8 +105,23 @@ align = 1
 valign = 1
 uppercase = true
 
-[node name="Node" type="Node" parent="."]
+[node name="ContaierNemico" type="CenterContainer" parent="HBoxContainer"]
+margin_left = 962.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[connection signal="pressed" from="sword" to="." method="_on_sword_pressed"]
-[connection signal="pressed" from="fist" to="." method="_on_fist_pressed"]
-[connection signal="pressed" from="warhead" to="." method="_on_warhead_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ContaierNemico"]
+margin_left = 447.0
+margin_top = 508.0
+margin_right = 511.0
+margin_bottom = 572.0
+custom_constants/separation = 60
+
+[node name="Nemico" parent="HBoxContainer/ContaierNemico/VBoxContainer" instance=ExtResource( 1 )]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="HBoxContainer/ContainerAlleato/HBoxContainer/sword" to="." method="_on_sword_pressed"]
+[connection signal="pressed" from="HBoxContainer/ContainerAlleato/HBoxContainer/fist" to="." method="_on_fist_pressed"]
+[connection signal="pressed" from="HBoxContainer/ContainerAlleato/HBoxContainer/warhead" to="." method="_on_warhead_pressed"]
