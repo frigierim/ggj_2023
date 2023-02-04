@@ -51,7 +51,6 @@ func _process(delta):
 			self.modulate.a = opacity
 			yield(get_tree().create_timer(0.4), "timeout")
 			opacity -= 0.01
-			print(opacity)
 		self.modulate.a = 0
 		
 
