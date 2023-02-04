@@ -71,8 +71,12 @@ var weapons_matrix : Dictionary = {
 		
 }
 
+# Cells containing already collected scripted events
+var collected_events : Dictionary = {}
+
+
 func _ready():
-	reset(Vector2.ZERO)
+	reset(Vector2(-1,-1))
 
 func save_gamestate():
 	_savefile = ConfigFile.new()
@@ -82,7 +86,8 @@ func save_gamestate():
 			player_hp = _savefile.get_value("game", "player_hp", INITIAL_HP) 
 			weapon_level = _savefile.get_value("game", "weapon_level", 0)
 			heal_level = _savefile.get_value("game", "heal_level", 0)
-			player_position = _savefile.get_value("game", "player_position", Vector2(0,0))
+			player_position = _savefile.get_value("game", "player_position", Vector2(-1,-1))
+			collected_events = _savefile.get_value("game", "collected_events", {})
 			
 func is_savegame_present() -> bool:
 	var f = File.new()
@@ -101,17 +106,18 @@ func load_gamestate():
 		_savefile.get_value("game", "weapon_level", weapon_level)
 		_savefile.get_value("game", "heal_level", heal_level)
 		_savefile.get_value("game", "player_position", player_position)
+		_savefile.get_value("game", "collected_events", collected_events)
 		_savefile.save(SAVEFILE_PATH)
 			
-	
 
 # The map parser will provide the initial charachter position
-func reset(initial_position : Vector2):
+func reset(initial_position : Vector2 = Vector2(-1,-1)):
 	light_rune_found = false
 	player_hp = INITIAL_HP
 	weapon_level = 0
 	heal_level = 0
 	player_position = initial_position
+	collected_events = {}
 	
 func collect_weapon():
 	weapon_level += 1
@@ -159,4 +165,9 @@ func getDamage(weapon : String, enemy : String):
 	assert(false)
 	return BASE_DAMAGE
 	
-	
+func collect_event(pos : Vector2):
+	collected_events[pos] = true
+	save_gamestate()
+
+func is_event_collected(pos : Vector2) -> bool:
+	return collected_events.has(pos)

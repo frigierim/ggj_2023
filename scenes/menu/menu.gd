@@ -18,10 +18,11 @@ func _ready():
 
 func _on_PlayButton_pressed() -> void:
 	var params = {
-		show_progress_bar = true,
-		"a_number": 10,
+		show_progress_bar = true
 	}
-	#Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
+	
+	# Set up the initial status and start game
+	GameStatus.reset()
 	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn", params)
 
 
