@@ -139,4 +139,5 @@ custom_colors/font_color = Color( 0.92549, 0.92549, 0.92549, 1 )
 text = "Enryco, Fillo, Max, Patu"
 
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

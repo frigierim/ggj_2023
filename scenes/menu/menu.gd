@@ -17,12 +17,8 @@ func _ready():
 
 
 func _on_PlayButton_pressed() -> void:
-	var params = {
-		show_progress_bar = false,
-	}
-	
 	#Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
-	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn", params)
+	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn")
 
 
 func _on_ExitButton_pressed() -> void:
@@ -35,3 +31,9 @@ func _on_ExitButton_pressed() -> void:
 		yield(transitions.anim, "animation_finished")
 		yield(get_tree().create_timer(0.3), "timeout")
 	get_tree().quit()
+
+
+func _on_ResumeButton_pressed():
+	GameStatus.load_gamestate()
+	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn")
+	
