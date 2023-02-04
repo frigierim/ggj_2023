@@ -4,8 +4,8 @@ func _ready():
 	
 	randomize()
 	
-	$Version/GameVersion.text = ProjectSettings.get_setting("application/config/version")
-	$Version/GodotVersion.text = "Godot %s" % Engine.get_version_info().string
+	#$Version/GameVersion.text = ProjectSettings.get_setting("application/config/version")
+	#$Version/GodotVersion.text = "Godot %s" % Engine.get_version_info().string
 	# needed for gamepads to work
 	$VBoxContainer/PlayButton.grab_focus()
 	if OS.has_feature('HTML5'):
@@ -18,11 +18,10 @@ func _ready():
 
 func _on_PlayButton_pressed() -> void:
 	var params = {
-		show_progress_bar = true
+		show_progress_bar = true,
+		"a_number": 10,
 	}
-	
-	# Set up the initial status and start game
-	GameStatus.reset()
+	#Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
 	Game.change_scene("res://scenes/tilemap/TileMapScene.tscn", params)
 
 
