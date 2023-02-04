@@ -52,6 +52,7 @@ func _ready():
 	
 	# The game map is used only as a reference, but we show the underlying image
 	game_map.visible = false
+	scripts_map.visible = false
 	
 	_moving = false
 	parse_map()
@@ -204,11 +205,11 @@ func _handle_new_position(x: int, y: int):
 		match tile:
 				
 			"start":
-				
 				var StartScene = Dialogic.start('StartingScene')
 				add_child(StartScene)
-				
-			"end":
+
+
+			"neutral_end", "end":
 				#TODO: Show dialog
 				print("Game over!")
 				
@@ -225,8 +226,8 @@ func _handle_new_position(x: int, y: int):
 			"first_enemy":
 				var FirstBattle = Dialogic.start('FirstBattle')
 				add_child(FirstBattle)
-				pass
-			
+				start_combat("snakes")
+							
 			"light_rune":
 				var FirstEvent = Dialogic.start('FirstEvent')
 				add_child(FirstEvent)
@@ -237,15 +238,13 @@ func _handle_new_position(x: int, y: int):
 			"pre_boss":
 				var BBWarning = Dialogic.start('BBWarning')
 				add_child(BBWarning)
+				
 			"boss":
 				var BossBattleScene = Dialogic.start('BossBattleScene')
 				add_child(BossBattleScene)
-				#TODO: enter boss battle
-				pass
 				
-			"neutral_end":
-				pass
-				
+				start_combat("nidhogg")
+
 			_:
 				assert(false)
 	
@@ -253,5 +252,13 @@ func _handle_new_position(x: int, y: int):
 		# No specific script found, verify encounter
 		if randf() < spawn_pct:
 			# Random encounter: set up enemies and trigger battle scene
-			print("Fighting enemies")
-			Game.change_scene("res://scenes/CombatScene/CombatScene.tscn")
+			start_combat("snakes")
+			
+
+func start_combat(enemy : String):
+	var params = {
+		"enemy" : enemy
+	}
+
+	Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
+	
