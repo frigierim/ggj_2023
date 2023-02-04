@@ -43,7 +43,7 @@ func _on_sword_pressed() -> void:
 	if (turno == false and canAttack == true):
 		canAttack = false
 		alleato.attack(turno)
-		nemico.vita -= 25
+		nemico.vita -= 100
 		show_than_hide_box_attack1()
 		yield(get_tree().create_timer(4.0), "timeout")
 		turno = true
@@ -71,7 +71,7 @@ func _on_warhead_pressed() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var numero_attacco:int = choice.randf_range(1, 3.9)
-	if (alleato.vita > 0):
+	if (alleato.vita > 0 and nemico.vita > 0):
 		if(numero_attacco == 1):
 			if(turno == true):
 				nemico.attack(turno)
@@ -94,5 +94,5 @@ func _process(_delta):
 				canAttack = true
 				
 	if(nemico.vita <= 0):
-		print("Hai vinto")
 		canAttack = false
+		nemico.dead()

@@ -7,7 +7,8 @@ export var vita:int = 100
 var velocita:Vector2
 var VELK:float = 50.0
 var isAttacking:bool = false
-
+var isDead:bool = false
+var opacity:float = 1
 var turno:bool = false
 #true -> nemico
 #false -> alleato
@@ -15,6 +16,9 @@ var turno:bool = false
 func attack(turno):
 	isAttacking = true
 	self.turno = turno
+	
+func dead():
+	isDead = true
 	
 func set_velocita():
 	if(turno != true):
@@ -40,6 +44,15 @@ func _process(delta):
 		set_velocita()
 		for i in range(1, 100):
 			self.rect_position += velocita * delta
+			
+	if(isDead == true):
+		isDead = false
+		while(opacity > 0.1):
+			self.modulate.a = opacity
+			yield(get_tree().create_timer(0.4), "timeout")
+			opacity -= 0.01
+			print(opacity)
+		self.modulate.a = 0
 		
 
 
