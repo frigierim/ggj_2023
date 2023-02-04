@@ -197,6 +197,8 @@ func _handle_new_position(x: int, y: int):
 			# we've already been here
 			return
 
+		GameStatus.collect_event(Vector2(x,y))
+		
 		var tile = scripts_map.tile_set.tile_get_name(cell_id)
 		match tile:
 				
@@ -239,9 +241,7 @@ func _handle_new_position(x: int, y: int):
 				
 			_:
 				assert(false)
-				
-		GameStatus.collect_event(Vector2(x,y))
-
+	
 	else:
 		# No specific script found, verify encounter
 		if randf() < spawn_pct:
