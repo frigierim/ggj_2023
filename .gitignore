@@ -13,4 +13,4 @@ builds
 # OSX 
 .DS_Store
 
-documentazione/*.import
+**/*.import
