@@ -1,16 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/ui-theme.tres" type="Theme" id=1]
 [ext_resource path="res://assets/fonts/White Storm.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://documentazione/Art/Combat Backgrounds/Roots2.png" type="Texture" id=3]
 [ext_resource path="res://scenes/menu/menu.gd" type="Script" id=5]
-
-[sub_resource type="DynamicFont" id=1]
-size = 90
-outline_size = 2
-use_filter = true
-extra_spacing_char = 2
-font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 52
@@ -51,16 +44,15 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 330.0
+margin_top = 361.0
 margin_right = 1920.0
-margin_bottom = 425.0
+margin_bottom = 395.0
 
 [node name="Title" type="Label" parent="VBoxContainer/CenterContainer"]
-margin_left = 607.0
-margin_right = 1312.0
-margin_bottom = 95.0
+margin_left = 862.0
+margin_right = 1058.0
+margin_bottom = 34.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 1 )
 text = "Dungeon Delve"
 align = 1
 uppercase = true
@@ -69,16 +61,16 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
-margin_top = 441.0
+margin_top = 411.0
 margin_right = 1920.0
-margin_bottom = 491.0
+margin_bottom = 461.0
 rect_min_size = Vector2( 0, 50 )
 color = Color( 1, 1, 1, 0 )
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
-margin_top = 507.0
+margin_top = 477.0
 margin_right = 1920.0
-margin_bottom = 577.0
+margin_bottom = 547.0
 rect_min_size = Vector2( 200, 70 )
 focus_neighbour_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
@@ -92,9 +84,9 @@ __meta__ = {
 }
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer"]
-margin_top = 593.0
+margin_top = 563.0
 margin_right = 1920.0
-margin_bottom = 663.0
+margin_bottom = 633.0
 rect_min_size = Vector2( 200, 70 )
 focus_neighbour_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
@@ -105,9 +97,9 @@ text = "RESUME"
 flat = true
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
-margin_top = 679.0
+margin_top = 649.0
 margin_right = 1920.0
-margin_bottom = 749.0
+margin_bottom = 719.0
 rect_min_size = Vector2( 200, 70 )
 focus_neighbour_top = NodePath("../PlayButton")
 focus_previous = NodePath("../PlayButton")

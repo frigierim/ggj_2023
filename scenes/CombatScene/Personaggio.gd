@@ -13,7 +13,7 @@ var Images = {
 }
 # Statistiche
 export var enemy_type:String = "Alleato" setget set_enemy_type
-export var vita:int = 120
+export var vita:int = 220
 var maxVita:int = vita
 
 var velocita:Vector2
@@ -77,7 +77,8 @@ func _process(delta):
 		isDamage = false
 		VELK = 100
 		velocita = Vector2(0, -VELK)
-		for _i in range(1, 100):
+		hit.visible = true
+		for i in range(1, 100):
 			hit.rect_position += velocita * delta
 			yield(get_tree().create_timer(0.005), "timeout")
 		yield(get_tree().create_timer(0.5), "timeout")
@@ -86,7 +87,6 @@ func _process(delta):
 		velocita = Vector2(0, VELK)
 		for _i in range(1, 100):
 			hit.rect_position += velocita*delta
-		hit.visible = true
 		VELK = 50.0
 		
 		

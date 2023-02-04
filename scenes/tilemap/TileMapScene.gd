@@ -242,8 +242,12 @@ func _handle_new_position(x: int, y: int):
 			"boss":
 				var BossBattleScene = Dialogic.start('BossBattleScene')
 				add_child(BossBattleScene)
-				
 				start_combat("nidhogg")
+				
+				
+			"neutral_end":
+				var EndingScene = Dialogic.start('EndingScene')
+				add_child(EndingScene)
 
 			_:
 				assert(false)
