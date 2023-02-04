@@ -119,7 +119,7 @@ func collect_weapon():
 	
 func collect_healing():
 	heal_level += 1
-	heal_level = clamp(heal_level, 0, len(healing_progression) - 1)
+	heal_level = clamp(heal_level, 0, len(healing_progression) - 1) as int
 	player_hp = healing_progression[heal_level]
 	save_gamestate()
 	

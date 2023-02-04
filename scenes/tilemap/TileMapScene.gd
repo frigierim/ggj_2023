@@ -17,7 +17,12 @@ const MAP_MAX_Y = 64
 const TILE_H : int = 16
 const TILE_W : int = 16
 
-const TILE_ID_BACK : int = 20
+const TILE_ID_PATH : int = 20
+
+# Completely black tile, to be used on the Visible Map
+const TILE_ID_HIDDEN : int = 0
+
+# No tile, to be uset to reveal elements in the Visible Map
 const TILE_ID_EMPTY : int = -1
 
 var position_x : int = 0
@@ -43,7 +48,7 @@ func _ready():
 	var ratio = min(Game.size.x / MAP_W, Game.size.y / MAP_H)
 	fog.material.set_shader_param("ratio", ratio)
 	
-	fog.visible = true
+	#fog.visible = true
 	
 	# The game map is used only as a reference, but we show the underlying image
 	game_map.visible = false
@@ -68,7 +73,7 @@ func parse_map():
 		for i in range(MAP_MAX_X):
 			
 			# use the visible map to cover areas not yet met before the light rune
-			visible_map.set_cell(i, j, TILE_ID_BACK)
+			visible_map.set_cell(i, j, TILE_ID_HIDDEN)
 			
 			var cell_id = scripts_map.get_cell(i, j)
 			if cell_id != -1:
@@ -90,7 +95,7 @@ func _check_position(x : int, y : int) -> bool:
 	if x >= MAP_MIN_X and x <= MAP_MAX_X:
 		if y >= MAP_MIN_Y and y <= MAP_MAX_Y:
 			var map_id = game_map.get_cell(x, y)
-			return map_id == TILE_ID_BACK
+			return map_id == TILE_ID_PATH
 	
 	return false		
 	
@@ -125,7 +130,9 @@ func _translate(x : int, y : int):
 func _on_movement_finished():
 	
 	if not illumination:
-		_fill_tile(position_x, position_y, TILE_ID_BACK)
+		_fill_tile(position_x, position_y, TILE_ID_HIDDEN)
+	else:
+		_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 		
 	position_x = _target_x
 	position_y = _target_y
@@ -206,6 +213,7 @@ func _handle_new_position(x: int, y: int):
 			"light_rune":
 				#TODO: show dialog
 				GameStatus.collect_light_rune()
+				illumination = true
 				
 			"pre_boss":
 				#TODO: show dialog
