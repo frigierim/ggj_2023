@@ -13,7 +13,7 @@ func _ready():
 
 	$VBoxContainer/ResumeButton.disabled = not GameStatus.is_savegame_present()
 	
-	Audio.play_music("res://assets/audio/running.ogg", false)
+	Audio.play_music("res://assets/audio/dungeon_ambient_1.ogg", false)
 
 
 func _on_PlayButton_pressed() -> void:

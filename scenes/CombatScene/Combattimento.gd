@@ -84,7 +84,7 @@ func _on_Spear_pressed():
 	
 func backToMap():
 	if(finished == false):
-		Audio.play_music(null, true)
+		Audio.play_music("res://assets/audio/dungeon_ambient_1.ogg", false)
 		print("Combattimento.gd: encounter_end")
 		emit_signal("encounter_end")
 		finished = true
