@@ -5,37 +5,62 @@
 			"event_id": "dialogic_021"
 		},
 		{
-			"character": "character-1675505738.json",
-			"event_id": "dialogic_001",
-			"portrait": "",
-			"text": "- Durinn proceeds through a section of the roots that collapsed onto itself due to the rot that took hold on it. -"
+			"animation": "back_in_up.gd",
+			"animation_length": 2,
+			"animation_wait": true,
+			"change_mirror_portrait": false,
+			"change_z_index": false,
+			"character": "character-1675522403.json",
+			"event_id": "dialogic_002",
+			"mirror_portrait": false,
+			"portrait": "Default",
+			"portrait_definition": "",
+			"position": {
+				"0": false,
+				"1": false,
+				"2": true,
+				"3": false,
+				"4": false
+			},
+			"type": 0,
+			"z_index": 0
 		},
 		{
-			"character": "character-1675505738.json",
+			"event_id": "dialogic_024",
+			"set_theme": "theme-1675525020.cfg"
+		},
+		{
+			"character": "character-1675522403.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "- Each step he takes causes a loud squelch to echo faintly between the ill roots. -"
 		},
 		{
-			"character": "character-1675505738.json",
+			"character": "character-1675522403.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "- Suddenly, after turning a steep angle, the squelches are muted by what sounds like a giant, brooding infant chewing on a pacifier. -"
 		},
 		{
-			"character": "character-1675505738.json",
+			"character": "character-1675522403.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "- With bathed breath, Durinn raises the light of the rune to illuminate the area he is in. -"
 		},
 		{
-			"character": "character-1675505738.json",
+			"character": "character-1675522403.json",
+			"event_id": "dialogic_001",
+			"portrait": "",
+			"text": "- Durinn proceeds through a section of the roots that collapsed onto itself due to the rot that took hold on it. -"
+		},
+		{
+			"character": "character-1675522403.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "- Up, in between a spire of roots, sits the passage for Midgard, the world of humans. A breeze flows from the passage, firm but gentle much like the distant eagle that is its source. -"
 		},
 		{
-			"character": "character-1675505738.json",
+			"character": "character-1675522403.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "- What Midgard looks like is largely obscured to Durinn, though, as an enormous slithering mass is blocking the view, sinking its teeth in the tender roots that form the passage. -"
