@@ -140,13 +140,16 @@ func _fill_tile(x : int, y : int, cell_id : int):
 			visible_map.set_cell(i, j, cell_id)
 
 	
-func _translate(x : int, y : int):
+func _translate(x : int, y : int, Direction:int):
 	
 	_target_x = x
 	_target_y = y
+	var animations = {MovementDirection.NORTH:"Up", MovementDirection.SOUTH:"Down", MovementDirection.EAST:"Right", MovementDirection.WEST:"Left"}
+	
 	
 	if _target_x != position_x or _target_y != position_y:
 		_moving = true
+		player.play(animations[Direction])
 		var tweener = get_tree().create_tween().set_parallel()
 		tweener.connect("finished", self, "_on_movement_finished")
 		tweener.tween_property(player, "position", Vector2(_target_x * TILE_W, _target_y * TILE_H), 0.3)
@@ -176,25 +179,25 @@ func _move(direction : int):
 			if _check_position(position_x, position_y - 1):
 				_accept_input = false
 				print("Movement accepted,  disabling input")
-				_translate(position_x, position_y - 1)
+				_translate(position_x, position_y - 1, direction)
 					
 		MovementDirection.EAST:
 			if _check_position(position_x + 1, position_y):
 				_accept_input = false
 				print("Movement accepted,  disabling input")
-				_translate(position_x + 1, position_y)
+				_translate(position_x + 1, position_y, direction)
 			
 		MovementDirection.SOUTH:
 			if _check_position(position_x, position_y + 1):
 				_accept_input = false
 				print("Movement accepted,  disabling input")
-				_translate(position_x, position_y + 1)
+				_translate(position_x, position_y + 1, direction)
 			
 		MovementDirection.WEST:
 			if _check_position(position_x - 1, position_y):
 				_accept_input = false
 				print("Movement accepted,  disabling input")
-				_translate(position_x - 1, position_y)
+				_translate(position_x - 1, position_y, direction)
 				
 
 func _input(event):

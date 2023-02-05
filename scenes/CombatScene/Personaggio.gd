@@ -9,10 +9,10 @@ var Images = {
 	"snakes" : preload("res://assets/Combat Sprites/Snakes.png"),
 	"ulfsarks" : preload("res://assets/Combat Sprites/Ulfsarks.png"),
 	"jotunn" : preload("res://assets/Combat Sprites/Jotunn.png"),
-	"nidhogg" : preload("res://documentazione/Characters/DurinnFaceBW.png"),
+	"nidhogg" : preload("res://documentazione/Art/Combat Sprites/Nidhogg.png"),
 	
 	# TODO: update player image
-	"Alleato" : preload("res://assets/Combat Sprites/Jotunn.png")
+	"Alleato" : preload("res://documentazione/Art/Combat Sprites/Character.png")
 }
 
 # Statistiche
