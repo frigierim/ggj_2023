@@ -37,6 +37,7 @@ var _target_x : int = -1
 var _target_y : int = -1
 var _moving : bool = false
 var _accept_input : bool = false
+var first_blood : bool = false
 
 export var illumination : bool = false setget _set_illumination
 export var spawn_pct : float = 0.1
@@ -57,6 +58,7 @@ func _ready():
 	fog.material.set_shader_param("ratio", ratio)
 	
 	fog.visible = true
+	first_blood = false
 	
 	# The game map is used only as a reference, but we show the underlying image
 	game_map.visible = false
@@ -73,6 +75,7 @@ func _ready():
 		var FirstBattle = Dialogic.start('FirstBattle')
 		add_child(FirstBattle)
 		FirstBattle.connect("dialogic_signal", self, "_dialogic_end")
+		first_blood = true
 
 
 func _set_illumination(new_value : bool):
@@ -294,8 +297,8 @@ func _handle_new_position(x: int, y: int):
 				assert(false)
 	
 	else:
-		# No specific script found, verify encounter
-		if randf() < spawn_pct:
+		# No specific script found, verify encounter (not before first scripted fight
+		if randf() < spawn_pct and first_blood:
 			# Random encounter: set up enemies and trigger battle scene
 			var enemy_chance = [ "snakes", "snakes", "snakes", "snakes", "snakes", 
 								"ulfsarks", "ulfsarks", "ulfsarks", "jotunn", "jotunn"
