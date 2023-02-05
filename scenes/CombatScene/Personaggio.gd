@@ -9,8 +9,12 @@ var Images = {
 	"snakes" : preload("res://assets/Combat Sprites/Snakes.png"),
 	"ulfsarks" : preload("res://assets/Combat Sprites/Ulfsarks.png"),
 	"jotunn" : preload("res://assets/Combat Sprites/Jotunn.png"),
-	"nidhogg" : preload("res://documentazione/Characters/DurinnFaceBW.png")
+	"nidhogg" : preload("res://documentazione/Characters/DurinnFaceBW.png"),
+	
+	# TODO: update player image
+	"Alleato" : preload("res://assets/Combat Sprites/Jotunn.png")
 }
+
 # Statistiche
 export var enemy_type:String = "Alleato" setget set_enemy_type
 export var vita:int = 220
@@ -19,6 +23,7 @@ var maxVita:int = vita
 var velocita:Vector2
 var VELK:float = 50.0
 var isAttacking:bool = false
+var isDying:bool = false
 var isDead:bool = false
 var isDamage:bool = false
 var opacity:float = 1
@@ -31,9 +36,30 @@ func set_enemy_type(name:String):
 	if(Images.has(enemy_type)):
 		personaggio.set_texture(Images[enemy_type])
 		personaggio.set_flip_h(false)
+		
+		if enemy_type == "Alleato":
+			vita = GameStatus.player_hp
+			maxVita = GameStatus.player_max_hp
+		else:
+			#TODO: initialize enemy initial live
+			maxVita = 220
+			vita = 220
+		
+		bar.max_value = maxVita
+		bar.min_value = 0
+		
 	else:
 		assert(false)
 	
+	isAttacking = false
+	isDying = false
+	isDead = false
+	isDamage = false
+	opacity = 1
+	turno = false
+	self.visible = true
+	self.modulate = Color(1,1,1,1)
+
 
 func attack(turn):
 	isAttacking = true
@@ -46,56 +72,34 @@ func damage(damage:int):
 func dead():
 	isDead = true
 	
-func set_velocita():
-	if(turno != true):
-		velocita = Vector2(VELK, 0)
-	else:
-		velocita = Vector2(-VELK, 0)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	bar.max_value = maxVita
-	bar.min_value = 0
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	bar.value = vita
 	hp.text = String(vita) + "/" + String(maxVita)
 	
 	if(isAttacking == true):
 		isAttacking = false
-		set_velocita()
-		for _i in range(1, 100):
-			self.rect_position += velocita * delta
-		yield(get_tree().create_timer(0.2), "timeout")
+		var tweener = create_tween()
+		var pos = self.rect_position
+		if turno:
+			tweener.tween_property(self, "rect_position", pos - Vector2(100,0), 0.3)
+			tweener.tween_property(self, "rect_position", pos, 0.2)
+		else:
+			tweener.tween_property(self, "rect_position", pos + Vector2(100,0), 0.3)
+			tweener.tween_property(self, "rect_position", pos, 0.2)
 		turno = !turno
-		set_velocita()
-		for _i in range(1, 100):
-			self.rect_position += velocita * delta
 			
 	if(isDamage == true):
 		isDamage = false
-		VELK = 100
-		velocita = Vector2(0, -VELK)
 		hit.visible = true
-		for i in range(1, 100):
-			hit.rect_position += velocita * delta
-			yield(get_tree().create_timer(0.005), "timeout")
-		yield(get_tree().create_timer(0.5), "timeout")
+		var tweener = create_tween()
+		var pos = hit.rect_position
+		tweener.tween_property(hit, "rect_position", pos - Vector2(0, 100), 0.3)
+		tweener.tween_property(hit, "rect_position", pos, 0.2)
+		tweener.tween_property(hit, "visible", false, 0.0)
+
+	if(isDead == true) and not isDying:
+		isDying = true
 		hit.visible = false
-		
-		velocita = Vector2(0, VELK)
-		for _i in range(1, 100):
-			hit.rect_position += velocita*delta
-		VELK = 50.0
-		
-		
-	if(isDead == true):
-		isDead = false
-		opacity = 1
-		hit.visible = false
-		while(opacity >= 0.1):
-			self.modulate.a = opacity
-			yield(get_tree().create_timer(0.01), "timeout")
-			opacity -= 0.01
-		self.visible = false
+		$AnimationPlayer.play("fade_out")

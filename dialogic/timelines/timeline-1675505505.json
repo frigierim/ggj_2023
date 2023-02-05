@@ -2,17 +2,18 @@
 	"events": [
 		{
 			"background": "res://documentazione/Art/Combat Backgrounds/RootsBase.png",
-			"event_id": "dialogic_021"
-		},
-		{
-			"event_id": "dialogic_024",
-			"set_theme": "theme-1675525020.cfg"
+			"event_id": "dialogic_021",
+			"fade_duration": 0
 		},
 		{
 			"character": "character-1675522403.json",
 			"event_id": "dialogic_001",
 			"portrait": "",
 			"text": "- Somewhere in Nidavellir, the Dark, Downward Fields that dwarves call home -"
+		},
+		{
+			"event_id": "dialogic_024",
+			"set_theme": "theme-1675525020.cfg"
 		},
 		{
 			"character": "character-1675522403.json",
@@ -113,6 +114,10 @@
 			"event_id": "dialogic_001",
 			"portrait": "Default",
 			"text": "\"Can the tree even be harmed by a common flame, though?\""
+		},
+		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
 		},
 		{
 			"event_id": "dialogic_022",

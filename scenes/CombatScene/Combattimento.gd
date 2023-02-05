@@ -11,14 +11,34 @@ var turno:bool = false
 #true -> turno nemico
 #false -> turno alleato
 
-var choice = RandomNumberGenerator.new()
-func _num():
-	choice.randomize()
+signal encounter_end
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	nemico.enemy_type = "ulfsarks"
-	
+func pre_start(params):
+	nemico.enemy_type = params["enemy"]
+	alleato.enemy_type = "Alleato"
+
+	var weapon_nodes : Array = [
+		$MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol/Headbutt, 
+		$MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol/Hatchet, 
+		$MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol/Axe,
+		$MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol/Sword, 
+		$MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol/Hammer, 
+		$MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol/Spear
+	]
+
+	for i in range(len(weapon_nodes)):
+		if i <= GameStatus.weapon_level:
+			weapon_nodes[i].visible = true
+		else:
+			weapon_nodes[i].visible = false
+
+	canAttack = true
+	damage = 0
+	finished = false
+	turno = false
+
+	Audio.play_music("res://assets/audio/battle.ogg")
+
 func attack(weapon):
 	if (turno == false and canAttack == true):
 		canAttack = false
@@ -55,23 +75,26 @@ func _on_Spear_pressed():
 	
 func backToMap():
 	if(finished == false):
-		Game.change_scene("res://scenes/tilemap/TileMapScene.tscn")
+		Audio.play_music(null, true)
+		emit_signal("encounter_end")
+		print("Combattimento.gd: encounter_end")
 		finished = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if (alleato.vita > 0 and nemico.vita > 0):
-			if(turno == true):
-				nemico.attack(turno)
-				alleato.damage(10)
-				alleato.vita -= 10
-				turno = false
-				canAttack = true
-				
-	if(nemico.vita <= 0):
-		canAttack = false
-		nemico.dead()
-		get_tree().create_timer(4).connect("timeout", self, "_on_nemico_dead")
+		if (alleato.vita > 0 and nemico.vita > 0):
+				if(turno == true):
+					nemico.attack(turno)
+					alleato.damage(10)
+					alleato.vita -= 10
+					GameStatus.player_damaged(10)
+					turno = false
+					canAttack = true
+					
+		if(nemico.vita <= 0):
+			canAttack = false
+			nemico.dead()
+			get_tree().create_timer(4).connect("timeout", self, "_on_nemico_dead")
 		
 func _on_nemico_dead():
 	backToMap()

@@ -43,6 +43,10 @@
 			"text": "“No way I'm letting that go to waste.”"
 		},
 		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
+		},
+		{
 			"event_id": "dialogic_022",
 			"transition_duration": 1
 		}

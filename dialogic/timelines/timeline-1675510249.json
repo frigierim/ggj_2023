@@ -42,6 +42,10 @@
 			"text": "“Is this where I wanted to go?”"
 		},
 		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
+		},
+		{
 			"event_id": "dialogic_022",
 			"transition_duration": 1
 		}

@@ -41,6 +41,10 @@
 			"text": "- What Midgard looks like is largely obscured to Durinn, though, as an enormous slithering mass is blocking the view, sinking its teeth in the tender roots that form the passage. -"
 		},
 		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
+		},
+		{
 			"event_id": "dialogic_022",
 			"transition_duration": 1
 		}

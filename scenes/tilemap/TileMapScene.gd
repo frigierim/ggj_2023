@@ -5,6 +5,8 @@ onready var player = $"%Player"
 onready var fog = $"%Fog"
 onready var visible_map = $"%VisibleMap"
 onready var scripts_map = $"%ScriptsMap"
+onready var combat_layer = $"%CombatLayer"
+onready var combat_scene = $"%CombatScene"
 
 const MAP_H = 21
 const MAP_W = 21
@@ -22,6 +24,9 @@ const TILE_ID_PATH : int = 20
 # Completely black tile, to be used on the Visible Map
 const TILE_ID_HIDDEN : int = 0
 
+# Half hidden node
+const TILE_ID_HALFVIS : int = 23
+
 # No tile, to be uset to reveal elements in the Visible Map
 const TILE_ID_EMPTY : int = -1
 
@@ -31,6 +36,7 @@ var position_y : int = 0
 var _target_x : int = -1
 var _target_y : int = -1
 var _moving : bool = false
+var _accept_input : bool = false
 
 export var illumination : bool = false setget _set_illumination
 export var spawn_pct : float = 0.1
@@ -44,27 +50,37 @@ func _ready():
 	map_camera.limit_bottom = MAP_H * TILE_H
 	map_camera.limit_right  = MAP_W * TILE_W
 	fog.scale = Vector2(Game.size.x / 10.0, Game.size.y / 10.0)
+	_accept_input = false
 	
 	var ratio = min(Game.size.x / MAP_W, Game.size.y / MAP_H)
 	fog.material.set_shader_param("ratio", ratio)
 	
-	#fog.visible = true
+	fog.visible = true
 	
 	# The game map is used only as a reference, but we show the underlying image
 	game_map.visible = false
 	scripts_map.visible = false
-	
-	_moving = false
 	parse_map()
 	_handle_new_position(position_x, position_y)
+
+
+	if GameStatus.first_combat == true:
+		GameStatus.set_running_first_combat(false)
+		# Play first battle dialog
+		_accept_input = false
+		var FirstBattle = Dialogic.start('FirstBattle')
+		add_child(FirstBattle)
+		FirstBattle.connect("dialogic_signal", self, "_dialogic_end")
 
 
 func _set_illumination(new_value : bool):
 	if visible_map:
 		if new_value:
 			visible_map.self_modulate = Color(1,1,1, .98)
+			fog.visible = false
 		else:
 			visible_map.self_modulate = Color(1,1,1, 0)
+			fog.visible = true
 	
 	illumination = new_value
 	
@@ -87,13 +103,15 @@ func parse_map():
 						position_x = i
 						position_y = j
 						
-						if GameStatus.player_position == Vector2(-1,-1):
-							player.position = Vector2(position_x * TILE_W, position_y * TILE_H)
-						else:
-							player.position = GameStatus.player_position
-							
-						
-						
+	if GameStatus.player_position == Vector2(-1,-1):
+		player.position = Vector2(position_x * TILE_W, position_y * TILE_H)
+	else:
+		position_x = GameStatus.player_position.x as int
+		position_y = GameStatus.player_position.y as int
+		
+		player.position = GameStatus.player_position * Vector2(TILE_W, TILE_H)
+	
+	print("Entering map, position %d - %d" % [position_x, position_y ])				
 	_update_fog_position(player.position)
 	_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 	
@@ -139,21 +157,17 @@ func _on_movement_finished():
 	if not illumination:
 		_fill_tile(position_x, position_y, TILE_ID_HIDDEN)
 	else:
-		_fill_tile(position_x, position_y, TILE_ID_EMPTY)
+		_fill_tile(position_x, position_y, TILE_ID_HALFVIS)
 		
 	position_x = _target_x
 	position_y = _target_y
 	_fill_tile(_target_x, _target_y, TILE_ID_EMPTY)
 	
 	_handle_new_position(position_x, position_y)
-		
-	_moving = false
 	
-
 func _move(direction : int):
 	
-	if _moving:
-		return false
+	_accept_input = false
 	
 	match direction:
 		
@@ -176,20 +190,27 @@ func _move(direction : int):
 
 func _input(event):
 	
-	if event.is_action_pressed("ui_up"):
+	if not _accept_input:
+		return
+		
+	if event.is_action_released("ui_up"):
 		_move(MovementDirection.NORTH)
 		
-	if event.is_action_pressed("ui_down"):
+	if event.is_action_released("ui_down"):
 		_move(MovementDirection.SOUTH)
 		
-	if event.is_action_pressed("ui_left"):
+	if event.is_action_released("ui_left"):
 		_move(MovementDirection.WEST)
 		
-	if event.is_action_pressed("ui_right"):
+	if event.is_action_released("ui_right"):
 		_move(MovementDirection.EAST)
 
-
+func _dialogic_end(arg):
+	_accept_input = true
+	
 func _handle_new_position(x: int, y: int):
+	
+	GameStatus.set_position(Vector2(x,y))
 	
 	# Check for scripted encounters
 	var cell_id = scripts_map.get_cell(x, y)
@@ -207,48 +228,52 @@ func _handle_new_position(x: int, y: int):
 			"start":
 				var StartScene = Dialogic.start('StartingScene')
 				add_child(StartScene)
-
+				StartScene.connect("dialogic_signal", self, "_dialogic_end")
 
 			"neutral_end", "end":
 				#TODO: Show dialog
+				_accept_input = true
 				print("Game over!")
 				
 			"health":
 				GameStatus.collect_healing()
 				var HealScene = Dialogic.start('HealScene')
 				add_child(HealScene)
+				HealScene.connect("dialogic_signal", self, "_dialogic_end")
 				
 			"weapon":
 				GameStatus.collect_weapon()
 				var WeaponScene = Dialogic.start('WeaponScene')
 				add_child(WeaponScene)
+				WeaponScene.connect("dialogic_signal", self, "_dialogic_end")
 				
 			"first_enemy":
-				var FirstBattle = Dialogic.start('FirstBattle')
-				add_child(FirstBattle)
 				start_combat("snakes")
+				GameStatus.set_running_first_combat(true)
 							
 			"light_rune":
+				GameStatus.collect_light_rune()
 				var FirstEvent = Dialogic.start('FirstEvent')
 				add_child(FirstEvent)
-				
-				GameStatus.collect_light_rune()
-				illumination = true
+				self.illumination = true
+				FirstEvent.connect("dialogic_signal", self, "_dialogic_end")
 				
 			"pre_boss":
 				var BBWarning = Dialogic.start('BBWarning')
 				add_child(BBWarning)
+				BBWarning.connect("dialogic_signal", self, "_dialogic_end")
 				
 			"boss":
 				var BossBattleScene = Dialogic.start('BossBattleScene')
 				add_child(BossBattleScene)
+				yield(BossBattleScene, "dialogic_signal")
 				start_combat("nidhogg")
-				
 				
 			"neutral_end":
 				var EndingScene = Dialogic.start('EndingScene')
 				add_child(EndingScene)
-
+				EndingScene.connect("dialogic_signal", self, "_dialogic_end")
+				
 			_:
 				assert(false)
 	
@@ -256,7 +281,10 @@ func _handle_new_position(x: int, y: int):
 		# No specific script found, verify encounter
 		if randf() < spawn_pct:
 			# Random encounter: set up enemies and trigger battle scene
+			print("Encounter!")
 			start_combat("snakes")
+		else:
+			_accept_input = true
 			
 
 func start_combat(enemy : String):
@@ -264,5 +292,17 @@ func start_combat(enemy : String):
 		"enemy" : enemy
 	}
 
-	Game.change_scene("res://scenes/CombatScene/CombatScene.tscn", params)
+	_accept_input = false
+	combat_scene.visible = true
+	combat_scene.pre_start(params)
+	$AnimationPlayer.play("combat_fade_in")
+
+
+func _on_CombatScene_encounter_end():
+	$AnimationPlayer.play("combat_fade_out")
 	
+func _combat_scene_closed():
+	combat_scene.visible = false
+	_accept_input = true
+	
+	# TODO: game over?

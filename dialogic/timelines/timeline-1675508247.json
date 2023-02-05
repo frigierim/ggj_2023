@@ -74,6 +74,10 @@
 			"text": "“Oh, they're gonna get it now.”"
 		},
 		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
+		},
+		{
 			"event_id": "dialogic_022",
 			"transition_duration": 1
 		}

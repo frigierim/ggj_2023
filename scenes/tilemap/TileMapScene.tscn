@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/tilemap/TileMap.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap/TileMapScene.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/durinn.png" type="Texture" id=3]
 [ext_resource path="res://scenes/tilemap/ScriptTileset.tres" type="TileSet" id=4]
 [ext_resource path="res://assets/map.png" type="Texture" id=5]
+[ext_resource path="res://scenes/CombatScene/CombatScene.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;
@@ -30,6 +31,67 @@ shader_param/ratio = 8.0
 
 [sub_resource type="ImageTexture" id=4]
 size = Vector2( 10, 10 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CombatLayer/CombatScene:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "combat_fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CombatLayer/CombatScene:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "combat_fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CombatLayer/CombatScene:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_combat_scene_closed"
+} ]
+}
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 2 )
@@ -83,4 +145,18 @@ self_modulate = Color( 1, 1, 1, 0.709804 )
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 196609, 0, 0, 262145, 2, 0, 327681, 4, 0, 393217, 5, 0, 458753, 8, 0, 524289, 6, 0, 589825, 3, 0, 655361, 7, 0 )
+tile_data = PoolIntArray( 196609, 0, 0, 262145, 5, 0, 327683, 2, 0, 458753, 8, 0, 524289, 6, 0, 589825, 3, 0, 655361, 7, 0, 720899, 4, 0 )
+
+[node name="CombatLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="CombatScene" parent="CombatLayer" instance=ExtResource( 6 )]
+unique_name_in_owner = true
+modulate = Color( 1, 1, 1, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 5 )
+anims/combat_fade_in = SubResource( 6 )
+anims/combat_fade_out = SubResource( 7 )
+
+[connection signal="encounter_end" from="CombatLayer/CombatScene" to="." method="_on_CombatScene_encounter_end"]

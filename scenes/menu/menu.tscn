@@ -145,6 +145,21 @@ grow_horizontal = 0
 custom_colors/font_color = Color( 0.92549, 0.92549, 0.92549, 1 )
 text = "Enryco, Fillo, Max, Patu"
 
+[node name="MadeByLabel2" type="Label" parent="Credits"]
+margin_top = 76.0
+margin_right = 255.0
+margin_bottom = 110.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Music:"
+
+[node name="Developer2" type="Label" parent="Credits"]
+margin_top = 114.0
+margin_right = 255.0
+margin_bottom = 148.0
+grow_horizontal = 0
+custom_colors/font_color = Color( 0.92549, 0.92549, 0.92549, 1 )
+text = "YouFulca"
+
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]

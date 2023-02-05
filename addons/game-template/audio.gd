@@ -17,13 +17,13 @@ func play_music(resource, stop_existing : bool = true):
 			_bg_music_player.stop()
 		
 		if _bg_music_player.stream == null or \
-			_bg_music_player.stream.resource_path != resource:
+			(resource and _bg_music_player.stream.resource_path != resource):
 			just_loaded = true
 			_bg_music_player.stream = load(resource)
 			if _bg_music_player.stream.has_method("set_loop"):
 				_bg_music_player.stream.set_loop(true)
 
-		if stop_existing or just_loaded:
+		if (stop_existing or just_loaded) and resource:
 			_bg_music_player.play()
 		
 func play_sound(resource):

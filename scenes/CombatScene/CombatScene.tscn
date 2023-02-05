@@ -35,7 +35,7 @@ size = 36
 extra_spacing_char = 2
 font_data = ExtResource( 3 )
 
-[node name="Combattimento" type="MarginContainer"]
+[node name="CombatScene" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 4 )
@@ -58,7 +58,7 @@ size_flags_vertical = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="MainContainer/ContainerAlleato"]
 margin_right = 958.0
-margin_bottom = 929.0
+margin_bottom = 1080.0
 rect_min_size = Vector2( 64, 64 )
 rect_pivot_offset = Vector2( 1961, 1241 )
 size_flags_horizontal = 3
@@ -70,16 +70,15 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 447.0
-margin_top = 432.0
-margin_right = 511.0
-margin_bottom = 496.0
 rect_pivot_offset = Vector2( 1729, 665 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="AttackContainer" type="HBoxContainer" parent="MainContainer/ContainerAlleato"]
-margin_top = 915.0
+[node name="Node2D" type="Node2D" parent="MainContainer/ContainerAlleato"]
+z_index = 5
+
+[node name="AttackContainer" type="HBoxContainer" parent="MainContainer/ContainerAlleato/Node2D"]
+margin_top = 933.0
 margin_right = 958.0
 margin_bottom = 1080.0
 rect_pivot_offset = Vector2( 1175, 254 )
@@ -87,57 +86,61 @@ size_flags_horizontal = 3
 custom_constants/separation = 10
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/ContainerAlleato/AttackContainer"]
+[node name="FirstCol" type="VBoxContainer" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer"]
 margin_left = 74.0
 margin_right = 474.0
-margin_bottom = 165.0
+margin_bottom = 147.0
 rect_min_size = Vector2( 400, 0 )
 custom_constants/separation = 6
 
-[node name="Headbutt" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer"]
+[node name="Headbutt" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol"]
+visible = false
 margin_right = 400.0
 margin_bottom = 45.0
 custom_fonts/font = SubResource( 1 )
 text = "Headbutt"
 
-[node name="Hatchet" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer"]
+[node name="Hatchet" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol"]
+visible = false
 margin_top = 51.0
 margin_right = 400.0
 margin_bottom = 96.0
 custom_fonts/font = SubResource( 2 )
 text = "Hatchet"
 
-[node name="2H_Axe" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer"]
-margin_top = 102.0
+[node name="Axe" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol"]
+visible = false
+margin_top = 51.0
 margin_right = 400.0
-margin_bottom = 147.0
+margin_bottom = 96.0
 custom_fonts/font = SubResource( 3 )
 text = "Two-Headed Axe"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MainContainer/ContainerAlleato/AttackContainer"]
+[node name="SecondCol" type="VBoxContainer" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer"]
 margin_left = 484.0
 margin_right = 884.0
-margin_bottom = 165.0
+margin_bottom = 147.0
 rect_min_size = Vector2( 400, 0 )
 custom_constants/separation = 6
 
-[node name="Sword" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2"]
+[node name="Sword" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol"]
+visible = false
 margin_right = 400.0
 margin_bottom = 45.0
 custom_fonts/font = SubResource( 4 )
 text = "Sword"
 
-[node name="Hammer" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2"]
-margin_top = 51.0
+[node name="Hammer" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol"]
+visible = false
 margin_right = 400.0
-margin_bottom = 96.0
+margin_bottom = 45.0
 custom_fonts/font = SubResource( 5 )
 text = "Hammer"
 
-[node name="Spear" type="Button" parent="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2"]
-margin_top = 102.0
+[node name="Spear" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol"]
+visible = false
 margin_right = 400.0
-margin_bottom = 147.0
+margin_bottom = 45.0
 custom_fonts/font = SubResource( 6 )
 text = "Spear"
 
@@ -161,16 +164,12 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 0.0
-margin_top = 0.0
-margin_right = 64.0
-margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer/Headbutt" to="." method="_on_Headbutt_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer/Hatchet" to="." method="_on_Hatchet_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer/2H_Axe" to="." method="_on_2H_Axe_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2/Sword" to="." method="_on_Sword_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2/Hammer" to="." method="_on_Hammer_pressed"]
-[connection signal="pressed" from="MainContainer/ContainerAlleato/AttackContainer/VBoxContainer2/Spear" to="." method="_on_Spear_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol/Headbutt" to="." method="_on_Headbutt_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol/Hatchet" to="." method="_on_Hatchet_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol/Axe" to="." method="_on_2H_Axe_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol/Sword" to="." method="_on_Sword_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol/Hammer" to="." method="_on_Hammer_pressed"]
+[connection signal="pressed" from="MainContainer/ContainerAlleato/Node2D/AttackContainer/SecondCol/Spear" to="." method="_on_Spear_pressed"]

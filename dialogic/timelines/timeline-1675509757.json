@@ -49,6 +49,10 @@
 			"text": "“Oof, that's a nasty stench. That's the first breeze I felt since entering this maze, though. The exit must be nearby.”"
 		},
 		{
+			"emit_signal": "",
+			"event_id": "dialogic_040"
+		},
+		{
 			"event_id": "dialogic_022",
 			"transition_duration": 1
 		}
