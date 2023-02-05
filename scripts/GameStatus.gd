@@ -1,6 +1,6 @@
 extends Node
 
-const INITIAL_HP = 100
+const INITIAL_HP = 200
 
 const SAVEFILE_PATH : String = "user://savegame.cfg"
 
@@ -82,29 +82,29 @@ var weapons_matrix : Dictionary = {
 var enemy_stats = {
 	"snakes" :
 	{
-		"base_dmg" : 25,
+		"base_dmg" : 15,
 		"miss_rate" : 0.25,
 		"variance"	: 10.0/100.0
 	},
 	"ulfsarks" :
 	{
-		"base_dmg" : 45,
+		"base_dmg" : 25,
 		"miss_rate" : 0.2,
-		"variance"	: 25.0/100.0
+		"variance"	: 20.0/100.0
 	},
 	
 	"jotunn" :
 	{
-		"base_dmg" : 60,
+		"base_dmg" : 30,
 		"miss_rate" : 0.4,
-		"variance"	: 40.0/100.0
+		"variance"	: 20.0/100.0
 	},
 	
 	"nidhogg" :
 	{
-		"base_dmg" : 50,
+		"base_dmg" : 40,
 		"miss_rate" : 0.2,
-		"variance"	: 20.0/100.0
+		"variance"	: 10.0/100.0
 	}
 }
 
