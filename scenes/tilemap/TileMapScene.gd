@@ -52,6 +52,7 @@ var game_over_images = [
 
 
 func _ready():
+	GameStatus.reset()
 	# Resize camera
 	map_camera.limit_top = 0
 	map_camera.limit_left = 0
