@@ -20,29 +20,33 @@ const BASE_DAMAGE = 100.0
 var weapons_matrix : Dictionary = {
 	
 	"headbutt" : {
-		"multiplier" : 0.8,
-		"miss_rate" : 0.0,
+		"base_dmg" : 80,
+		"miss_rate" : 0.15,
+		"multiplier" : 1.0,
 		"variance"	: 20.0/100.0
 		
 	},
 	"hatchet" : {
+		"base_dmg" : 100,
 		"multiplier" : 1.0,
-		"miss_rate" : 0.0,
+		"miss_rate" : 0.05,
 		"variance"	: 20.0/100.0
 	},
 	
 	"two_headed axe" : 
 	{
+		"base_dmg" : 115,
 		"multiplier" :
 			{
 				"snakes" : 1.5
 			},
-		"miss_rate" : 0.0,
+		"miss_rate" : 0.05,
 		"variance"	: 20.0/100.0
 	},
 	
 	"sword" : 
 	{
+		"base_dmg" : 130,
 		"multiplier" :
 			{
 				"ulfsarks" : 1.5
@@ -53,6 +57,7 @@ var weapons_matrix : Dictionary = {
 
 	"hammer" : 
 	{
+		"base_dmg" : 140,
 		"multiplier" :
 			{
 				"jotunn" : 1.5
@@ -63,6 +68,7 @@ var weapons_matrix : Dictionary = {
 	
 	"spear" : 
 	{
+		"base_dmg" : 150,
 		"multiplier" :
 			{
 				"nidhogg" : 1.5
@@ -72,6 +78,37 @@ var weapons_matrix : Dictionary = {
 	}
 		
 }
+
+
+var enemy_stats = {
+	"snakes" :
+	{
+		"base_dmg" : 150,
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+	"ulfsarks" :
+	{
+		"base_dmg" : 150,
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+	
+	"jotunn" :
+	{
+		"base_dmg" : 150,
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	},
+	
+	"nidhogg" :
+	{
+		"base_dmg" : 150,
+		"miss_rate" : 0.0,
+		"variance"	: 20.0/100.0
+	}
+}
+
 
 # Cells containing already collected scripted events
 var collected_events : Dictionary = {}
@@ -166,6 +203,8 @@ func getDamage(weapon : String, enemy : String):
 	if weapons_matrix.has(weapon):
 		
 		var weapon_stats = weapons_matrix[weapon]
+		var base_dmg = weapon_stats["base_dmg"]
+		
 		if weapon_stats.has("multiplier"):
 			var multiplier : float = 1.0
 			if weapon_stats["multiplier"] is Dictionary:
@@ -177,7 +216,7 @@ func getDamage(weapon : String, enemy : String):
 			else:
 				assert(false)
 				
-			return _calc_damage(BASE_DAMAGE * multiplier, weapon_stats["miss_rate"], weapon_stats["variance"])
+			return _calc_damage(base_dmg * multiplier, weapon_stats["miss_rate"], weapon_stats["variance"])
 		
 	assert(false)
 	return BASE_DAMAGE
@@ -188,3 +227,10 @@ func collect_event(pos : Vector2):
 
 func is_event_collected(pos : Vector2) -> bool:
 	return collected_events.has(pos)
+
+
+func getEnemyDamage(enemy : String) -> int:
+	assert(enemy_stats.has[enemy])
+	var stats = enemy_stats[enemy]
+	return _calc_damage(stats["base_dmg"],  stats["miss_rate"],  stats["variance"])
+	

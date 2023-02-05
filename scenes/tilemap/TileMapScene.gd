@@ -53,10 +53,6 @@ func _ready():
 	fog.scale = Vector2(Game.size.x / 10.0, Game.size.y / 10.0)
 	_accept_input = false
 	
-	
-	var ratio = min(Game.size.x / MAP_W, Game.size.y / MAP_H)
-	fog.material.set_shader_param("ratio", ratio)
-	
 	fog.visible = true
 	first_blood = false
 	
@@ -117,7 +113,6 @@ func parse_map():
 		player.position = GameStatus.player_position * Vector2(TILE_W, TILE_H)
 	
 	print("Entering map, position %d - %d" % [position_x, position_y ])				
-	_update_fog_position(player.position)
 	_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 	
 
@@ -129,12 +124,8 @@ func _check_position(x : int, y : int) -> bool:
 	
 	return false		
 	
-	
-func _update_fog_position(pos : Vector2):
-	var uv = Vector2((pos.x - map_camera.position.x - TILE_W) / Game.size.x, (pos.y - map_camera.position.y - TILE_H) / Game.size.y)
-	fog.material.set_shader_param("center_x", uv.x)
-	fog.material.set_shader_param("center_y", uv.y)
-	
+		
+		
 
 func _fill_tile(x : int, y : int, cell_id : int):
 
@@ -156,7 +147,6 @@ func _translate(x : int, y : int, Direction:int):
 		var tweener = get_tree().create_tween().set_parallel()
 		tweener.connect("finished", self, "_on_movement_finished")
 		tweener.tween_property(player, "position", Vector2(_target_x * TILE_W, _target_y * TILE_H), 0.3)
-		tweener.tween_method(self, "_update_fog_position", player.position, Vector2(_target_x * TILE_W, _target_y * TILE_H), 0.3)
 		# Make the destination tile visible
 		_fill_tile(_target_x, _target_y, TILE_ID_EMPTY)
 	
@@ -220,7 +210,7 @@ func _input(event):
 	if event.is_action_released("ui_right"):
 		_move(MovementDirection.EAST)
 
-func _dialogic_end(arg):
+func _dialogic_end(_arg):
 	print("Dialogue complete, reaccepting inputs")
 	_accept_input = true
 	
@@ -246,12 +236,10 @@ func _handle_new_position(x: int, y: int):
 				
 			"start":
 				
-				# Todo: re enable start scene
-				_accept_input = true
-				
 				#var StartScene = Dialogic.start('StartingScene')
 				#add_child(StartScene)
 				#StartScene.connect("dialogic_signal", self, "_dialogic_end")
+				_accept_input = true
 
 			"end":
 				print("Game over!")

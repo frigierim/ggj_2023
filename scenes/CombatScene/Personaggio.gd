@@ -42,8 +42,24 @@ func set_enemy_type(name:String):
 			maxVita = GameStatus.player_max_hp
 		else:
 			#TODO: initialize enemy initial live
-			maxVita = 220
-			vita = 220
+			match enemy_type:
+				
+				"snakes":
+								maxVita = 115
+								vita = 115
+
+				"ulfsarks":
+								maxVita = 190
+								vita = 190
+
+				"jotunn":
+								maxVita = 280
+								vita = 280
+
+				"nidhogg":
+								maxVita = 390
+								vita = 390
+				
 		
 		bar.max_value = maxVita
 		bar.min_value = 0
@@ -66,7 +82,7 @@ func attack(turn):
 	self.turno = turn
 	
 func damage(damage:int):
-	hit.text = String(-(damage + 1))
+	hit.text = String(-(damage))
 	isDamage = true
 	
 func dead():
