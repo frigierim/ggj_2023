@@ -212,7 +212,7 @@ tile_data = PoolIntArray( 0, 21, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 2
 
 [node name="Player" type="AnimatedSprite" parent="."]
 unique_name_in_owner = true
-scale = Vector2( 0.325, 0.325 )
+scale = Vector2( 0.3, 0.3 )
 frames = SubResource( 21 )
 animation = "Down"
 centered = false

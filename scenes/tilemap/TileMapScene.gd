@@ -128,7 +128,7 @@ func _check_position(x : int, y : int) -> bool:
 	
 	
 func _update_fog_position(pos : Vector2):
-	var uv = Vector2((pos.x - map_camera.position.x + TILE_W / 2.0) / Game.size.x, (pos.y - map_camera.position.y + TILE_H / 2.0) / Game.size.y)
+	var uv = Vector2((pos.x - map_camera.position.x - TILE_W) / Game.size.x, (pos.y - map_camera.position.y - TILE_H) / Game.size.y)
 	fog.material.set_shader_param("center_x", uv.x)
 	fog.material.set_shader_param("center_y", uv.y)
 	
