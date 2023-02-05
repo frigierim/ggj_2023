@@ -10,7 +10,7 @@ export var player_max_hp : int = INITIAL_HP
 export var weapon_level : int = 0
 export var heal_level : int = 0
 export var player_position : Vector2
-var healing_progression : Array = [100, 110, 130, 170, 210, 260 ]
+var healing_progression : Array = [1.0, 1.10, 1.30, 1.70, 2.10, 2.60 ]
 
 var _savefile = null
 
@@ -171,8 +171,8 @@ func player_damaged(dmg):
 func collect_healing():
 	heal_level += 1
 	heal_level = clamp(heal_level, 0, len(healing_progression) - 1) as int
-	player_hp = healing_progression[heal_level]
-	player_max_hp = player_hp
+	player_hp = BASE_DAMAGE * healing_progression[heal_level]
+	player_max_hp = BASE_DAMAGE * player_hp
 	save_gamestate()
 	
 func collect_light_rune():
