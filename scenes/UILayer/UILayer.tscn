@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/fonts/open-sans/open-sans-bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/FullBar.png" type="Texture" id=2]
 [ext_resource path="res://assets/EmptyBar.png" type="Texture" id=3]
 [ext_resource path="res://documentazione/Art/CharArt/DurinnMainScreen.png" type="Texture" id=4]
 [ext_resource path="res://scenes/UILayer/UILayer.gd" type="Script" id=5]
+[ext_resource path="res://assets/ButtonFont.tres" type="DynamicFont" id=6]
 
 [sub_resource type="StyleBoxFlat" id=41]
 bg_color = Color( 0, 0, 0, 0.545098 )
@@ -19,36 +20,43 @@ font_data = ExtResource( 1 )
 unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
 script = ExtResource( 5 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1900.0
+margin_bottom = 1060.0
 
 [node name="btnQuit" type="Button" parent="VBoxContainer"]
-margin_left = 1880.0
-margin_right = 1920.0
-margin_bottom = 20.0
+margin_left = 1816.0
+margin_right = 1880.0
+margin_bottom = 45.0
 size_flags_horizontal = 8
+custom_fonts/font = ExtResource( 6 )
 text = "Quit"
 align = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = 24.0
-margin_right = 1920.0
-margin_bottom = 820.0
+margin_top = 49.0
+margin_right = 1880.0
+margin_bottom = 780.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PlayerStats" type="PanelContainer" parent="VBoxContainer"]
-margin_top = 824.0
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_top = 784.0
+margin_right = 1880.0
+margin_bottom = 1040.0
 size_flags_vertical = 8
 custom_styles/panel = SubResource( 41 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PlayerStats"]
-margin_right = 1920.0
+margin_right = 1880.0
 margin_bottom = 256.0
 size_flags_vertical = 8
 
@@ -91,3 +99,5 @@ custom_fonts/font = SubResource( 42 )
 text = "500/500"
 align = 1
 valign = 1
+
+[connection signal="pressed" from="VBoxContainer/btnQuit" to="." method="_on_btnQuit_pressed"]

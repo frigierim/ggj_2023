@@ -4,11 +4,7 @@
 [ext_resource path="res://documentazione/Art/Combat Backgrounds/Roots0.png" type="Texture" id=2]
 [ext_resource path="res://assets/fonts/White Storm.otf" type="DynamicFontData" id=3]
 [ext_resource path="res://scenes/CombatScene/Combattimento.gd" type="Script" id=4]
-
-[sub_resource type="DynamicFont" id=1]
-size = 36
-extra_spacing_char = 2
-font_data = ExtResource( 3 )
+[ext_resource path="res://assets/ButtonFont.tres" type="DynamicFont" id=5]
 
 [sub_resource type="DynamicFont" id=2]
 size = 36
@@ -97,7 +93,7 @@ custom_constants/separation = 6
 visible = false
 margin_right = 400.0
 margin_bottom = 45.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = ExtResource( 5 )
 text = "Headbutt"
 
 [node name="Hatchet" type="Button" parent="MainContainer/ContainerAlleato/Node2D/AttackContainer/FirstCol"]

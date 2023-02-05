@@ -256,15 +256,18 @@ centered = false
 
 [node name="GameOver" type="CanvasLayer" parent="."]
 
-[node name="CenterContainer" type="CenterContainer" parent="GameOver"]
+[node name="FinalScreen" type="CenterContainer" parent="GameOver"]
+unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 
-[node name="GameOverImg" type="TextureRect" parent="GameOver/CenterContainer"]
+[node name="GameOverImg" type="TextureRect" parent="GameOver/FinalScreen"]
 unique_name_in_owner = true
 margin_left = 960.0
 margin_top = 540.0
 margin_right = 960.0
 margin_bottom = 540.0
+mouse_filter = 2
 
 [connection signal="encounter_end" from="CombatLayer/CombatScene" to="." method="_on_CombatScene_encounter_end"]

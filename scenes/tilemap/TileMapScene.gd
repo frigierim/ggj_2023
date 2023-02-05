@@ -9,6 +9,7 @@ onready var combat_layer = $"%CombatLayer"
 onready var combat_scene = $"%CombatScene"
 onready var ui_layer = $"%UILayer"
 onready var game_over_img = $"%GameOverImg"
+onready var final_screen = $"%FinalScreen"
 
 const MAP_H = 50
 const MAP_W = 64
@@ -62,9 +63,13 @@ func _ready():
 	first_blood = false
 	game_over = false
 	
+	ui_layer.connect("quit_pressed", self, "_on_quit_pressed")
+	
 	# The game map is used only as a reference, but we show the underlying image
 	game_map.visible = false
 	scripts_map.visible = false
+	final_screen.visible = false
+	
 	parse_map()
 	_handle_new_position(position_x, position_y)
 
@@ -215,7 +220,7 @@ func _dialogic_end(_arg):
 	_accept_input = true
 	
 	if game_over == true:
-		game_over(true)
+		game_over_screen(true)
 
 	
 func _handle_new_position(x: int, y: int):
@@ -346,7 +351,7 @@ func _on_CombatScene_encounter_end():
 	$AnimationPlayer.play("combat_fade_out")
 	
 	if GameStatus.player_hp <= 0:
-		game_over(false)
+		game_over_screen(false)
 		
 	
 func _combat_scene_closed():
@@ -364,9 +369,10 @@ func _combat_scene_closed():
 		first_blood = true
 		
 		
-func game_over(win : bool):
+func game_over_screen(win : bool):
 	
 	_accept_input = false
+	final_screen.visible = true	
 	
 	if win:
 		game_over_img.texture = game_over_images[1]
@@ -377,3 +383,5 @@ func game_over(win : bool):
 	Game.change_scene("res://scenes/menu/menu.tscn")
 		
 
+func _on_quit_pressed():
+	Game.change_scene("res://scenes/menu/menu.tscn")
