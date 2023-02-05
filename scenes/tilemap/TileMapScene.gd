@@ -40,7 +40,7 @@ var _accept_input : bool = false
 var first_blood : bool = false
 
 export var illumination : bool = false setget _set_illumination
-export var spawn_pct : float = 0.1
+export var spawn_pct : float = 0.01
 
 enum MovementDirection { NORTH, EAST, SOUTH, WEST }
 
@@ -245,14 +245,43 @@ func _handle_new_position(x: int, y: int):
 		match tile:
 				
 			"start":
-				var StartScene = Dialogic.start('StartingScene')
-				add_child(StartScene)
-				StartScene.connect("dialogic_signal", self, "_dialogic_end")
-
-			"neutral_end", "end":
-				#TODO: Show dialog
+				
+				# Todo: re enable start scene
 				_accept_input = true
+				
+				#var StartScene = Dialogic.start('StartingScene')
+				#add_child(StartScene)
+				#StartScene.connect("dialogic_signal", self, "_dialogic_end")
+
+			"end":
 				print("Game over!")
+				var EndingScene = Dialogic.start('EndingScene')
+				add_child(EndingScene)
+				EndingScene.connect("dialogic_signal", self, "_dialogic_end")
+				
+				
+			"neutral_end":
+				var dead_ends = {
+					
+					Vector2(15,51) : "D1",
+					Vector2(37,9)  : "D2",
+					Vector2(21,57) : "D3",
+					Vector2(31,19) : "D4",
+					Vector2(3,21) : "D5",
+					Vector2(29,5) : "D6",
+					Vector2(13,5) : "D7",
+				}
+				
+				if dead_ends.has(Vector2(x,y)):
+					print("Dead end found!")
+					var DeadEndScene = Dialogic.start(dead_ends[Vector2(x,y)])
+					add_child(DeadEndScene)
+					DeadEndScene.connect("dialogic_signal", self, "_dialogic_end")
+				else:
+					print("Dead end not found")
+					assert(false)
+					_accept_input = true
+
 				
 			"health":
 				GameStatus.collect_healing()
@@ -287,11 +316,6 @@ func _handle_new_position(x: int, y: int):
 				add_child(BossBattleScene)
 				yield(BossBattleScene, "dialogic_signal")
 				start_combat("nidhogg")
-				
-			"neutral_end":
-				var EndingScene = Dialogic.start('EndingScene')
-				add_child(EndingScene)
-				EndingScene.connect("dialogic_signal", self, "_dialogic_end")
 				
 			_:
 				assert(false)

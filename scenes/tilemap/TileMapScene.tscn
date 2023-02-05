@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://scenes/tilemap/TileMap.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap/TileMapScene.gd" type="Script" id=2]
+[ext_resource path="res://scenes/tilemap/map - eventi.png" type="Texture" id=3]
 [ext_resource path="res://scenes/tilemap/ScriptTileset.tres" type="TileSet" id=4]
 [ext_resource path="res://assets/map.png" type="Texture" id=5]
 [ext_resource path="res://scenes/CombatScene/CombatScene.tscn" type="PackedScene" id=6]
@@ -250,7 +251,7 @@ self_modulate = Color( 1, 1, 1, 0.709804 )
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 65583, 6, 0, 196612, 4, 0, 327693, 8, 0, 327709, 8, 0, 589861, 8, 0, 655385, 3, 0, 1245192, 3, 0, 1245215, 8, 0, 1376259, 8, 0, 1441839, 3, 0, 1507351, 4, 0, 2293775, 8, 0, 2424839, 4, 0, 2424869, 1, 0, 2555943, 7, 0, 2818049, 5, 0, 2818069, 4, 0, 2949165, 4, 0, 3276822, 3, 0, 3342339, 0, 0, 3342351, 8, 0, 3473409, 2, 0, 3735573, 8, 0, 3932172, 3, 0 )
+tile_data = PoolIntArray( 65583, 6, 0, 196612, 4, 0, 327693, 8, 0, 327709, 8, 0, 589861, 8, 0, 655385, 3, 0, 1245192, 3, 0, 1245215, 8, 0, 1376259, 8, 0, 1441839, 3, 0, 1507351, 4, 0, 2424839, 4, 0, 2424869, 1, 0, 2555943, 7, 0, 2818049, 5, 0, 2818069, 4, 0, 2949165, 4, 0, 3276822, 3, 0, 3342339, 0, 0, 3342351, 8, 0, 3473409, 2, 0, 3735573, 8, 0, 3932172, 3, 0 )
 
 [node name="CombatLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -267,5 +268,11 @@ margin_bottom = 10.0
 anims/RESET = SubResource( 22 )
 anims/combat_fade_in = SubResource( 23 )
 anims/combat_fade_out = SubResource( 24 )
+
+[node name="Map-Eventi" type="Sprite" parent="."]
+visible = false
+self_modulate = Color( 1, 1, 1, 0.419608 )
+texture = ExtResource( 3 )
+centered = false
 
 [connection signal="encounter_end" from="CombatLayer/CombatScene" to="." method="_on_CombatScene_encounter_end"]
