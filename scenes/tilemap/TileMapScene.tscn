@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/tilemap/TileMap.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap/TileMapScene.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scenes/CombatScene/CombatScene.tscn" type="PackedScene" id=6]
 [ext_resource path="res://documentazione/Art/Exploration Sprites/Moveset.png" type="Texture" id=7]
 [ext_resource path="res://assets/fog.png" type="Texture" id=8]
+[ext_resource path="res://scenes/UILayer/UILayer.tscn" type="PackedScene" id=9]
 
 [sub_resource type="AtlasTexture" id=25]
 flags = 4
@@ -175,7 +176,7 @@ tracks/1/keys = {
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 2 )
-spawn_pct = 0.0
+spawn_pct = 0.1
 
 [node name="Map" type="Sprite" parent="."]
 position = Vector2( 408, 520 )
@@ -199,7 +200,7 @@ centered = false
 [node name="MapCamera" type="Camera2D" parent="Player"]
 unique_name_in_owner = true
 current = true
-zoom = Vector2( 0.1, 0.1 )
+zoom = Vector2( 0.2, 0.2 )
 drag_margin_left = 0.5
 drag_margin_top = 0.5
 drag_margin_right = 0.5
@@ -212,7 +213,7 @@ texture = ExtResource( 8 )
 
 [node name="VisibleMap" type="TileMap" parent="."]
 unique_name_in_owner = true
-self_modulate = Color( 1, 1, 1, 0.913725 )
+self_modulate = Color( 1, 1, 1, 0.717647 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 format = 1
@@ -238,14 +239,32 @@ margin_top = 10.0
 margin_right = 11.0
 margin_bottom = 10.0
 
+[node name="UiLayer" type="CanvasLayer" parent="."]
+
+[node name="UILayer" parent="UiLayer" instance=ExtResource( 9 )]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 22 )
 anims/combat_fade_in = SubResource( 23 )
 anims/combat_fade_out = SubResource( 24 )
 
 [node name="Map-Eventi" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.215686 )
 texture = ExtResource( 3 )
 centered = false
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOver"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="GameOverImg" type="TextureRect" parent="GameOver/CenterContainer"]
+unique_name_in_owner = true
+margin_left = 960.0
+margin_top = 540.0
+margin_right = 960.0
+margin_bottom = 540.0
 
 [connection signal="encounter_end" from="CombatLayer/CombatScene" to="." method="_on_CombatScene_encounter_end"]

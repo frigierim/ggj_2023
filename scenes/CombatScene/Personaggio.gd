@@ -82,7 +82,11 @@ func attack(turn):
 	self.turno = turn
 	
 func damage(damage:int):
-	hit.text = String(-(damage))
+	if damage > 0 :
+		hit.text = String(-(damage))
+	else:
+		hit.text = "MISS!"
+		
 	isDamage = true
 	
 func dead():

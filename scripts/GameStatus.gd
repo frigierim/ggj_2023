@@ -9,7 +9,6 @@ export var player_hp : int = INITIAL_HP
 export var player_max_hp : int = INITIAL_HP
 export var weapon_level : int = 0
 export var heal_level : int = 0
-export var first_combat : bool = false
 export var player_position : Vector2
 var healing_progression : Array = [100, 110, 130, 170, 210, 260 ]
 
@@ -126,7 +125,6 @@ func load_gamestate():
 			player_max_hp = _savefile.get_value("game", "player_max_hp", INITIAL_HP)
 			weapon_level = _savefile.get_value("game", "weapon_level", 0)
 			heal_level = _savefile.get_value("game", "heal_level", 0)
-			first_combat = _savefile.get_value("game", "first_combat", false)
 			player_position = _savefile.get_value("game", "player_position", Vector2(-1,-1))
 			collected_events = _savefile.get_value("game", "collected_events", {})
 			
@@ -147,7 +145,6 @@ func save_gamestate():
 		_savefile.set_value("game", "player_max_hp", player_max_hp)
 		_savefile.get_value("game", "weapon_level", weapon_level)
 		_savefile.get_value("game", "heal_level", heal_level)
-		_savefile.get_value("game", "first_combat", first_combat)
 		_savefile.get_value("game", "player_position", player_position)
 		_savefile.get_value("game", "collected_events", collected_events)
 		_savefile.save(SAVEFILE_PATH)
@@ -160,7 +157,6 @@ func reset(initial_position : Vector2 = Vector2(-1,-1)):
 	player_max_hp = INITIAL_HP
 	weapon_level = 0
 	heal_level = 0
-	first_combat = false
 	player_position = initial_position
 	collected_events = {}
 	
@@ -185,10 +181,6 @@ func collect_light_rune():
 	
 func set_position(pos : Vector2):
 	player_position = pos
-	save_gamestate()
-
-func set_running_first_combat(first : bool):
-	first_combat = first
 	save_gamestate()
 
 func _calc_damage(base : float, miss_rate : float, variance : float):

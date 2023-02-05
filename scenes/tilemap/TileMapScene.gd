@@ -7,6 +7,8 @@ onready var visible_map = $"%VisibleMap"
 onready var scripts_map = $"%ScriptsMap"
 onready var combat_layer = $"%CombatLayer"
 onready var combat_scene = $"%CombatScene"
+onready var ui_layer = $"%UILayer"
+onready var game_over_img = $"%GameOverImg"
 
 const MAP_H = 50
 const MAP_W = 64
@@ -35,11 +37,18 @@ var _target_y : int = -1
 var _moving : bool = false
 var _accept_input : bool = false
 var first_blood : bool = false
+var game_over : bool = false
 
 export var illumination : bool = false setget _set_illumination
 export var spawn_pct : float = 0.01
 
 enum MovementDirection { NORTH, EAST, SOUTH, WEST }
+
+var game_over_images = [
+	preload("res://documentazione/Esempi BG/gameoverimage.jpg"), # Lose
+	preload("res://documentazione/Esempi BG/youwin.png"), # Win
+]
+
 
 func _ready():
 	# Resize camera
@@ -51,24 +60,13 @@ func _ready():
 	
 	fog.visible = true
 	first_blood = false
+	game_over = false
 	
 	# The game map is used only as a reference, but we show the underlying image
 	game_map.visible = false
 	scripts_map.visible = false
 	parse_map()
 	_handle_new_position(position_x, position_y)
-
-
-	if GameStatus.first_combat == true:
-		GameStatus.set_running_first_combat(false)
-		# Play first battle dialog
-		_accept_input = false
-		print("First battle, disabling input")
-		var FirstBattle = Dialogic.start('FirstBattle')
-		add_child(FirstBattle)
-		FirstBattle.connect("dialogic_signal", self, "_dialogic_end")
-		first_blood = true
-
 
 func _set_illumination(new_value : bool):
 	if visible_map:
@@ -149,6 +147,9 @@ func _translate(x : int, y : int, Direction:int):
 	
 func _on_movement_finished():
 	
+	player.stop()
+	player.frame = 0
+	
 	if not illumination:
 		_fill_tile(position_x, position_y, TILE_ID_HIDDEN)
 	else:
@@ -210,7 +211,12 @@ func _input(event):
 
 func _dialogic_end(_arg):
 	print("Dialogue complete, reaccepting inputs")
+	ui_layer.visible = true
 	_accept_input = true
+	
+	if game_over == true:
+		game_over(true)
+
 	
 func _handle_new_position(x: int, y: int):
 	
@@ -234,17 +240,18 @@ func _handle_new_position(x: int, y: int):
 				
 			"start":
 				
-				#var StartScene = Dialogic.start('StartingScene')
-				#add_child(StartScene)
-				#StartScene.connect("dialogic_signal", self, "_dialogic_end")
-				_accept_input = true
-
+				var StartScene = Dialogic.start('StartingScene')
+				add_child(StartScene)
+				StartScene.connect("dialogic_signal", self, "_dialogic_end")
+				ui_layer.visible = false
+				
 			"end":
 				print("Game over!")
+				game_over = true
 				var EndingScene = Dialogic.start('EndingScene')
 				add_child(EndingScene)
 				EndingScene.connect("dialogic_signal", self, "_dialogic_end")
-				
+				ui_layer.visible = false
 				
 			"neutral_end":
 				var dead_ends = {
@@ -263,6 +270,7 @@ func _handle_new_position(x: int, y: int):
 					var DeadEndScene = Dialogic.start(dead_ends[Vector2(x,y)])
 					add_child(DeadEndScene)
 					DeadEndScene.connect("dialogic_signal", self, "_dialogic_end")
+					ui_layer.visible = false
 				else:
 					print("Dead end not found")
 					assert(false)
@@ -274,16 +282,17 @@ func _handle_new_position(x: int, y: int):
 				var HealScene = Dialogic.start('HealScene')
 				add_child(HealScene)
 				HealScene.connect("dialogic_signal", self, "_dialogic_end")
+				ui_layer.visible = false
 				
 			"weapon":
 				GameStatus.collect_weapon()
 				var WeaponScene = Dialogic.start('WeaponScene')
 				add_child(WeaponScene)
 				WeaponScene.connect("dialogic_signal", self, "_dialogic_end")
+				ui_layer.visible = false
 				
 			"first_enemy":
 				start_combat("snakes")
-				GameStatus.set_running_first_combat(true)
 							
 			"light_rune":
 				GameStatus.collect_light_rune()
@@ -291,11 +300,13 @@ func _handle_new_position(x: int, y: int):
 				add_child(FirstEvent)
 				self.illumination = true
 				FirstEvent.connect("dialogic_signal", self, "_dialogic_end")
+				ui_layer.visible = false
 				
 			"pre_boss":
 				var BBWarning = Dialogic.start('BBWarning')
 				add_child(BBWarning)
 				BBWarning.connect("dialogic_signal", self, "_dialogic_end")
+				ui_layer.visible = false
 				
 			"boss":
 				var BossBattleScene = Dialogic.start('BossBattleScene')
@@ -325,6 +336,7 @@ func start_combat(enemy : String):
 		"enemy" : enemy
 	}
 
+	ui_layer.visible = false
 	combat_scene.visible = true
 	combat_scene.pre_start(params)
 	$AnimationPlayer.play("combat_fade_in")
@@ -333,8 +345,35 @@ func start_combat(enemy : String):
 func _on_CombatScene_encounter_end():
 	$AnimationPlayer.play("combat_fade_out")
 	
+	if GameStatus.player_hp <= 0:
+		game_over(false)
+		
+	
 func _combat_scene_closed():
 	combat_scene.visible = false
+	ui_layer.visible = true
 	_accept_input = true
 	print("Combat complete, reaccepting inputs")
-	# TODO: game over?
+	
+	if not first_blood:
+		# Play first battle dialog
+		_accept_input = false
+		var FirstBattle = Dialogic.start('FirstBattle')
+		add_child(FirstBattle)
+		FirstBattle.connect("dialogic_signal", self, "_dialogic_end")
+		first_blood = true
+		
+		
+func game_over(win : bool):
+	
+	_accept_input = false
+	
+	if win:
+		game_over_img.texture = game_over_images[1]
+	else:
+		game_over_img.texture = game_over_images[0]
+	
+	yield(get_tree().create_timer(3.0)	,"timeout")
+	Game.change_scene("res://scenes/menu/menu.tscn")
+		
+
