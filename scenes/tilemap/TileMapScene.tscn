@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scenes/tilemap/TileMap.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap/TileMapScene.gd" type="Script" id=2]
@@ -90,19 +90,19 @@ region = Rect2( 0, 150, 50, 50 )
 [sub_resource type="SpriteFrames" id=21]
 animations = [ {
 "frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
-"loop": true,
+"loop": false,
 "name": "Down",
-"speed": 5.0
+"speed": 25.0
 }, {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
-"loop": true,
+"loop": false,
 "name": "Left",
-"speed": 5.0
+"speed": 25.0
 }, {
 "frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
-"loop": true,
+"loop": false,
 "name": "Right",
-"speed": 5.0
+"speed": 25.0
 }, {
 "frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
 "loop": false,
@@ -135,6 +135,67 @@ shader_param/ratio = 8.0
 [sub_resource type="ImageTexture" id=4]
 size = Vector2( 10, 10 )
 
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CombatLayer/CombatScene:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "combat_fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CombatLayer/CombatScene:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "combat_fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("CombatLayer/CombatScene:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_combat_scene_closed"
+} ]
+}
+
 [node name="Map" type="Node2D"]
 script = ExtResource( 2 )
 
@@ -151,10 +212,10 @@ tile_data = PoolIntArray( 0, 21, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 2
 
 [node name="Player" type="AnimatedSprite" parent="."]
 unique_name_in_owner = true
-position = Vector2( 7, 7 )
-scale = Vector2( 0.25, 0.25 )
+scale = Vector2( 0.325, 0.325 )
 frames = SubResource( 21 )
-animation = "Right"
+animation = "Down"
+centered = false
 
 [node name="MapCamera" type="Camera2D" parent="Player"]
 unique_name_in_owner = true
@@ -203,5 +264,8 @@ margin_right = 11.0
 margin_bottom = 10.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 22 )
+anims/combat_fade_in = SubResource( 23 )
+anims/combat_fade_out = SubResource( 24 )
 
 [connection signal="encounter_end" from="CombatLayer/CombatScene" to="." method="_on_CombatScene_encounter_end"]
