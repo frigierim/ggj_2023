@@ -52,6 +52,7 @@ func _ready():
 	fog.scale = Vector2(Game.size.x / 10.0, Game.size.y / 10.0)
 	_accept_input = false
 	
+	
 	var ratio = min(Game.size.x / MAP_W, Game.size.y / MAP_H)
 	fog.material.set_shader_param("ratio", ratio)
 	
@@ -68,6 +69,7 @@ func _ready():
 		GameStatus.set_running_first_combat(false)
 		# Play first battle dialog
 		_accept_input = false
+		print("First battle, disabling input")
 		var FirstBattle = Dialogic.start('FirstBattle')
 		add_child(FirstBattle)
 		FirstBattle.connect("dialogic_signal", self, "_dialogic_end")
@@ -162,29 +164,36 @@ func _on_movement_finished():
 	position_x = _target_x
 	position_y = _target_y
 	_fill_tile(_target_x, _target_y, TILE_ID_EMPTY)
-	
+	print("Movement finished")
 	_handle_new_position(position_x, position_y)
 	
 func _move(direction : int):
 	
-	_accept_input = false
 	
 	match direction:
 		
 		MovementDirection.NORTH:
 			if _check_position(position_x, position_y - 1):
+				_accept_input = false
+				print("Movement accepted,  disabling input")
 				_translate(position_x, position_y - 1)
 					
 		MovementDirection.EAST:
 			if _check_position(position_x + 1, position_y):
+				_accept_input = false
+				print("Movement accepted,  disabling input")
 				_translate(position_x + 1, position_y)
 			
 		MovementDirection.SOUTH:
 			if _check_position(position_x, position_y + 1):
+				_accept_input = false
+				print("Movement accepted,  disabling input")
 				_translate(position_x, position_y + 1)
 			
 		MovementDirection.WEST:
 			if _check_position(position_x - 1, position_y):
+				_accept_input = false
+				print("Movement accepted,  disabling input")
 				_translate(position_x - 1, position_y)
 				
 
@@ -206,11 +215,13 @@ func _input(event):
 		_move(MovementDirection.EAST)
 
 func _dialogic_end(arg):
+	print("Dialogue complete, reaccepting inputs")
 	_accept_input = true
 	
 func _handle_new_position(x: int, y: int):
 	
 	GameStatus.set_position(Vector2(x,y))
+	print("Setting position %d, %d" % [x, y])
 	
 	# Check for scripted encounters
 	var cell_id = scripts_map.get_cell(x, y)
@@ -218,11 +229,13 @@ func _handle_new_position(x: int, y: int):
 		
 		if GameStatus.is_event_collected(Vector2(x,y)):
 			# we've already been here
+			_accept_input = true
 			return
 
 		GameStatus.collect_event(Vector2(x,y))
 		
 		var tile = scripts_map.tile_set.tile_get_name(cell_id)
+		print(tile)
 		match tile:
 				
 			"start":
@@ -284,6 +297,7 @@ func _handle_new_position(x: int, y: int):
 			print("Encounter!")
 			start_combat("snakes")
 		else:
+			print("No encounter, reaccepting inputs")
 			_accept_input = true
 			
 
@@ -292,7 +306,6 @@ func start_combat(enemy : String):
 		"enemy" : enemy
 	}
 
-	_accept_input = false
 	combat_scene.visible = true
 	combat_scene.pre_start(params)
 	$AnimationPlayer.play("combat_fade_in")
@@ -304,5 +317,5 @@ func _on_CombatScene_encounter_end():
 func _combat_scene_closed():
 	combat_scene.visible = false
 	_accept_input = true
-	
+	print("Combat complete, reaccepting inputs")
 	# TODO: game over?
