@@ -45,11 +45,11 @@ func _ready():
 	# Resize camera
 	map_camera.limit_top = 0
 	map_camera.limit_left = 0
-	map_camera.limit_bottom = MAP_H * TILE_H
-	map_camera.limit_right  = MAP_W * TILE_W
+	#map_camera.limit_bottom = MAP_H * TILE_H
+	#map_camera.limit_right  = MAP_W * TILE_W
 	_accept_input = false
 	
-	#fog.visible = true
+	fog.visible = true
 	first_blood = false
 	
 	# The game map is used only as a reference, but we show the underlying image
