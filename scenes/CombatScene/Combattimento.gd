@@ -35,6 +35,7 @@ func pre_start(params):
 	canAttack = true
 	damage = 0
 	finished = false
+	print("Entering combat, finished = false")
 	turno = false
 
 	Audio.play_music("res://assets/audio/battle.ogg")
@@ -46,8 +47,16 @@ func attack(weapon):
 		damage = GameStatus.getDamage(weapon, nemico.enemy_type)
 		nemico.damage(damage)
 		nemico.vita -= damage
-		yield(get_tree().create_timer(3.0), "timeout")
+		if(nemico.vita <= 0):
+			canAttack = false
+			nemico.dead()
+			get_tree().create_timer(4).connect("timeout", self, "_on_nemico_dead")
+			return
+		else:
+			yield(get_tree().create_timer(3.0), "timeout")
 		turno = true
+
+		
 		
 # Headbutt Attack
 func _on_Headbutt_pressed():
@@ -76,8 +85,8 @@ func _on_Spear_pressed():
 func backToMap():
 	if(finished == false):
 		Audio.play_music(null, true)
-		emit_signal("encounter_end")
 		print("Combattimento.gd: encounter_end")
+		emit_signal("encounter_end")
 		finished = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -91,10 +100,6 @@ func _process(_delta):
 					turno = false
 					canAttack = true
 					
-		if(nemico.vita <= 0):
-			canAttack = false
-			nemico.dead()
-			get_tree().create_timer(4).connect("timeout", self, "_on_nemico_dead")
 		
 func _on_nemico_dead():
 	backToMap()
