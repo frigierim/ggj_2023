@@ -297,8 +297,11 @@ func _handle_new_position(x: int, y: int):
 		# No specific script found, verify encounter
 		if randf() < spawn_pct:
 			# Random encounter: set up enemies and trigger battle scene
-			print("Encounter!")
-			start_combat("snakes")
+			var enemy_chance = [ "snakes", "snakes", "snakes", "snakes", "snakes", 
+								"ulfsarks", "ulfsarks", "ulfsarks", "jotunn", "jotunn"
+								]
+
+			start_combat(enemy_chance[randi() % len(enemy_chance)])
 		else:
 			print("No encounter, reaccepting inputs")
 			_accept_input = true
