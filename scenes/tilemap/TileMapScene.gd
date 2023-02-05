@@ -360,7 +360,7 @@ func _combat_scene_closed():
 	_accept_input = true
 	print("Combat complete, reaccepting inputs")
 	
-	if not first_blood:
+	if not first_blood and GameStatus.player_hp > 0:
 		# Play first battle dialog
 		_accept_input = false
 		var FirstBattle = Dialogic.start('FirstBattle')

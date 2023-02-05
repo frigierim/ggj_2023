@@ -50,10 +50,10 @@ func attack(weapon):
 		if(nemico.vita <= 0):
 			canAttack = false
 			nemico.dead()
-			get_tree().create_timer(4).connect("timeout", self, "_on_nemico_dead")
+			get_tree().create_timer(3).connect("timeout", self, "_on_nemico_dead")
 			return
 		else:
-			yield(get_tree().create_timer(3.0), "timeout")
+			yield(get_tree().create_timer(2.0), "timeout")
 		turno = true
 
 		
@@ -99,6 +99,11 @@ func _process(_delta):
 					alleato.damage(damage)
 					alleato.vita -= damage
 					GameStatus.player_damaged(damage)
+					
+					if GameStatus.player_hp <= 0:
+						yield(get_tree().create_timer(2.0), "timeout")
+						backToMap()
+						
 					turno = false
 					canAttack = true
 					
