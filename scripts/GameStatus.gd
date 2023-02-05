@@ -83,28 +83,28 @@ var weapons_matrix : Dictionary = {
 var enemy_stats = {
 	"snakes" :
 	{
-		"base_dmg" : 150,
-		"miss_rate" : 0.0,
-		"variance"	: 20.0/100.0
+		"base_dmg" : 25,
+		"miss_rate" : 0.25,
+		"variance"	: 10.0/100.0
 	},
 	"ulfsarks" :
 	{
-		"base_dmg" : 150,
-		"miss_rate" : 0.0,
-		"variance"	: 20.0/100.0
+		"base_dmg" : 45,
+		"miss_rate" : 0.2,
+		"variance"	: 25.0/100.0
 	},
 	
 	"jotunn" :
 	{
-		"base_dmg" : 150,
-		"miss_rate" : 0.0,
-		"variance"	: 20.0/100.0
+		"base_dmg" : 60,
+		"miss_rate" : 0.4,
+		"variance"	: 40.0/100.0
 	},
 	
 	"nidhogg" :
 	{
-		"base_dmg" : 150,
-		"miss_rate" : 0.0,
+		"base_dmg" : 50,
+		"miss_rate" : 0.2,
 		"variance"	: 20.0/100.0
 	}
 }
@@ -230,7 +230,7 @@ func is_event_collected(pos : Vector2) -> bool:
 
 
 func getEnemyDamage(enemy : String) -> int:
-	assert(enemy_stats.has[enemy])
+	assert(enemy_stats.has(enemy))
 	var stats = enemy_stats[enemy]
 	return _calc_damage(stats["base_dmg"],  stats["miss_rate"],  stats["variance"])
 	

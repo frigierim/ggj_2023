@@ -95,9 +95,9 @@ func _process(_delta):
 				if(turno == true):
 					nemico.attack(turno)
 					
-					damage = GameStatus.getEnemyDamage(nemico.enemy_type)
+					var damage = GameStatus.getEnemyDamage(nemico.enemy_type)
 					alleato.damage(damage)
-					alleato.vita -= 10
+					alleato.vita -= damage
 					GameStatus.player_damaged(damage)
 					turno = false
 					canAttack = true
