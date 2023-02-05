@@ -8,8 +8,8 @@ onready var scripts_map = $"%ScriptsMap"
 onready var combat_layer = $"%CombatLayer"
 onready var combat_scene = $"%CombatScene"
 
-const MAP_H = 21
-const MAP_W = 21
+const MAP_H = 50
+const MAP_W = 64
 
 const MAP_MIN_X = 0
 const MAP_MAX_X = 50
@@ -23,9 +23,6 @@ const TILE_ID_PATH : int = 20
 
 # Completely black tile, to be used on the Visible Map
 const TILE_ID_HIDDEN : int = 0
-
-# Half hidden node
-const TILE_ID_HALFVIS : int = 23
 
 # No tile, to be uset to reveal elements in the Visible Map
 const TILE_ID_EMPTY : int = -1
@@ -50,10 +47,9 @@ func _ready():
 	map_camera.limit_left = 0
 	map_camera.limit_bottom = MAP_H * TILE_H
 	map_camera.limit_right  = MAP_W * TILE_W
-	fog.scale = Vector2(Game.size.x / 10.0, Game.size.y / 10.0)
 	_accept_input = false
 	
-	fog.visible = true
+	#fog.visible = true
 	first_blood = false
 	
 	# The game map is used only as a reference, but we show the underlying image
@@ -109,9 +105,9 @@ func parse_map():
 	else:
 		position_x = GameStatus.player_position.x as int
 		position_y = GameStatus.player_position.y as int
-		
 		player.position = GameStatus.player_position * Vector2(TILE_W, TILE_H)
 	
+	print(player.position)		
 	print("Entering map, position %d - %d" % [position_x, position_y ])				
 	_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 	
@@ -129,6 +125,7 @@ func _check_position(x : int, y : int) -> bool:
 
 func _fill_tile(x : int, y : int, cell_id : int):
 
+	print("Filling tiles (%d, %d) with %d " % [ x, y, cell_id])
 	for j in range(clamp(y - 1, 0, MAP_MAX_Y), clamp(y + 1, 0, MAP_MAX_Y) + 1):
 		for i in range(clamp(x - 1, 0, MAP_MAX_X), clamp(x + 1, 0, MAP_MAX_X) + 1):
 			visible_map.set_cell(i, j, cell_id)
@@ -155,7 +152,7 @@ func _on_movement_finished():
 	if not illumination:
 		_fill_tile(position_x, position_y, TILE_ID_HIDDEN)
 	else:
-		_fill_tile(position_x, position_y, TILE_ID_HALFVIS)
+		_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 		
 	position_x = _target_x
 	position_y = _target_y
@@ -165,6 +162,7 @@ func _on_movement_finished():
 	
 func _move(direction : int):
 	
+	print("Evaluating movement")
 	
 	match direction:
 		

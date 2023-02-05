@@ -195,21 +195,20 @@ frames = SubResource( 21 )
 animation = "Down"
 centered = false
 
-[node name="Fog" type="Sprite" parent="Player"]
-unique_name_in_owner = true
-position = Vector2( 24, 24 )
-texture = ExtResource( 8 )
-
 [node name="MapCamera" type="Camera2D" parent="Player"]
 unique_name_in_owner = true
-position = Vector2( -32, -32 )
-scale = Vector2( 5, 5 )
+anchor_mode = 0
 current = true
-zoom = Vector2( 0.2, 0.2 )
 drag_margin_left = 0.5
 drag_margin_top = 0.5
 drag_margin_right = 0.5
 drag_margin_bottom = 0.5
+
+[node name="Fog" type="Sprite" parent="Player"]
+unique_name_in_owner = true
+visible = false
+position = Vector2( 24, 24 )
+texture = ExtResource( 8 )
 
 [node name="VisibleMap" type="TileMap" parent="."]
 unique_name_in_owner = true
@@ -245,6 +244,7 @@ anims/combat_fade_in = SubResource( 23 )
 anims/combat_fade_out = SubResource( 24 )
 
 [node name="Map-Eventi" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.215686 )
 texture = ExtResource( 3 )
 centered = false
