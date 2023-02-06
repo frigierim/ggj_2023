@@ -14,5 +14,6 @@ Music:
 * JaggedStone, YouFulca
 
 Credits:
-* Godot Game Engine
+* Godot Game Engine (godotengine.org)
+* Dialogic plugin (https://github.com/coppolaemilio/dialogic)  
 * itch.io and opengameart.org for the music
