@@ -50,9 +50,9 @@ custom_constants/separation = 16
 alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="VBoxContainer"]
-margin_top = 330.0
+margin_top = 373.0
 margin_right = 1920.0
-margin_bottom = 425.0
+margin_bottom = 468.0
 
 [node name="Title" type="Label" parent="VBoxContainer/CenterContainer"]
 margin_left = 601.0
@@ -68,16 +68,16 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer"]
-margin_top = 441.0
+margin_top = 484.0
 margin_right = 1920.0
-margin_bottom = 491.0
+margin_bottom = 534.0
 rect_min_size = Vector2( 0, 50 )
 color = Color( 1, 1, 1, 0 )
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
-margin_top = 507.0
+margin_top = 550.0
 margin_right = 1920.0
-margin_bottom = 577.0
+margin_bottom = 620.0
 rect_min_size = Vector2( 200, 70 )
 focus_neighbour_bottom = NodePath("../ExitButton")
 focus_next = NodePath("../ExitButton")
@@ -91,6 +91,7 @@ __meta__ = {
 }
 
 [node name="ResumeButton" type="Button" parent="VBoxContainer"]
+visible = false
 margin_top = 593.0
 margin_right = 1920.0
 margin_bottom = 663.0
@@ -104,9 +105,9 @@ text = "RESUME"
 flat = true
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
-margin_top = 679.0
+margin_top = 636.0
 margin_right = 1920.0
-margin_bottom = 749.0
+margin_bottom = 706.0
 rect_min_size = Vector2( 200, 70 )
 focus_neighbour_top = NodePath("../PlayButton")
 focus_previous = NodePath("../PlayButton")

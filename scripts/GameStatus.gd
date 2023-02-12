@@ -171,8 +171,8 @@ func player_damaged(dmg):
 func collect_healing():
 	heal_level += 1
 	heal_level = clamp(heal_level, 0, len(healing_progression) - 1) as int
-	player_hp = BASE_DAMAGE * healing_progression[heal_level]
-	player_max_hp = BASE_DAMAGE * player_hp
+	player_hp = INITIAL_HP * healing_progression[heal_level]
+	player_max_hp = player_hp
 	save_gamestate()
 	
 func collect_light_rune():

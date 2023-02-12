@@ -11,7 +11,8 @@ func _ready():
 	if OS.has_feature('HTML5'):
 		$VBoxContainer/ExitButton.queue_free()
 
-	$VBoxContainer/ResumeButton.disabled = not GameStatus.is_savegame_present()
+	# Temporarily disabled, tile visibility cannot be restored across runs
+	#$VBoxContainer/ResumeButton.disabled = not GameStatus.is_savegame_present()
 	
 	Audio.play_music("res://assets/audio/dungeon_ambient_1.ogg", false)
 

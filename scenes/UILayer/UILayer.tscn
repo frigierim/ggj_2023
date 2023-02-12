@@ -8,7 +8,7 @@
 [ext_resource path="res://assets/ButtonFont.tres" type="DynamicFont" id=6]
 
 [sub_resource type="StyleBoxFlat" id=41]
-bg_color = Color( 0, 0, 0, 0.545098 )
+bg_color = Color( 0, 0, 0, 0.176471 )
 
 [sub_resource type="DynamicFont" id=42]
 size = 20

@@ -10,6 +10,10 @@ Programming:
 Game design, art:
 * Patu
 
+Additional art:
+* Bonsaiheldin | https://opengameart.org/content/rpg-potions-16x16
+* Gerald Burke | https://opengameart.org/content/pixel-weapon-sheet
+
 Music:
 * JaggedStone, YouFulca
 

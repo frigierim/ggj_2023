@@ -10,6 +10,7 @@ onready var combat_scene = $"%CombatScene"
 onready var ui_layer = $"%UILayer"
 onready var game_over_img = $"%GameOverImg"
 onready var final_screen = $"%FinalScreen"
+onready var collectible_layer = $"%CollectibleLayer"
 
 const MAP_H = 50
 const MAP_W = 64
@@ -26,6 +27,9 @@ const TILE_ID_PATH : int = 20
 
 # Completely black tile, to be used on the Visible Map
 const TILE_ID_HIDDEN : int = 0
+
+# 50% visible tile for visited tiles
+const TILE_ID_HALF : int = 23
 
 # No tile, to be uset to reveal elements in the Visible Map
 const TILE_ID_EMPTY : int = -1
@@ -50,6 +54,12 @@ var game_over_images = [
 	preload("res://documentazione/Esempi BG/youwin.png"), # Win
 ]
 
+var collectible_scenes = {
+	"health" : preload("res://scenes/potion/potion.tscn"),
+	"weapon" : preload("res://scenes/weapon/weapon.tscn")
+}
+
+var collectibles : Dictionary = {}
 
 func _ready():
 	GameStatus.reset()
@@ -60,7 +70,7 @@ func _ready():
 	#map_camera.limit_right  = MAP_W * TILE_W
 	_accept_input = false
 	
-	fog.visible = true
+	fog.visible = false
 	first_blood = false
 	game_over = false
 	
@@ -78,15 +88,17 @@ func _set_illumination(new_value : bool):
 	if visible_map:
 		if new_value:
 			visible_map.self_modulate = Color(1,1,1, .98)
-			fog.visible = false
+			fog.visible = true
 		else:
 			visible_map.self_modulate = Color(1,1,1, 0)
-			fog.visible = true
+			fog.visible = false
 	
 	illumination = new_value
 	
 func parse_map():
 	# Find points of interest on the map
+	for c in collectible_layer.get_children():
+		c.queue_free()
 
 	for j in range(MAP_MAX_Y):
 		for i in range(MAP_MAX_X):
@@ -103,6 +115,21 @@ func parse_map():
 						
 						position_x = i
 						position_y = j
+				
+				
+					"health":
+						if not GameStatus.is_event_collected(Vector2(i,j)):
+							var health_icon = collectible_scenes[tile].instance()
+							health_icon.position = Vector2(i * TILE_W, j * TILE_H)
+							collectibles[Vector2(i,j)] = health_icon
+							collectible_layer.add_child(health_icon)
+							
+					"weapon":
+						if not GameStatus.is_event_collected(Vector2(i,j)):
+							var weapon_icon = collectible_scenes[tile].instance()
+							weapon_icon.position = Vector2(i * TILE_W, j * TILE_H)
+							collectibles[Vector2(i,j)] = weapon_icon
+							collectible_layer.add_child(weapon_icon)
 						
 	if GameStatus.player_position == Vector2(-1,-1):
 		player.position = Vector2(position_x * TILE_W, position_y * TILE_H)
@@ -250,10 +277,12 @@ func _handle_new_position(x: int, y: int):
 				add_child(StartScene)
 				StartScene.connect("dialogic_signal", self, "_dialogic_end")
 				ui_layer.visible = false
+				#_accept_input = true
 				
 			"end":
 				print("Game over!")
 				game_over = true
+				ui_layer.visible = false
 				var EndingScene = Dialogic.start('EndingScene')
 				add_child(EndingScene)
 				EndingScene.connect("dialogic_signal", self, "_dialogic_end")
@@ -285,6 +314,10 @@ func _handle_new_position(x: int, y: int):
 				
 			"health":
 				GameStatus.collect_healing()
+				collectible_layer.remove_child(collectibles[Vector2(x,y)])
+				collectibles[Vector2(x,y)].queue_free()
+				collectibles.erase(Vector2(x,y))
+				
 				var HealScene = Dialogic.start('HealScene')
 				add_child(HealScene)
 				HealScene.connect("dialogic_signal", self, "_dialogic_end")
@@ -292,6 +325,10 @@ func _handle_new_position(x: int, y: int):
 				
 			"weapon":
 				GameStatus.collect_weapon()
+				collectible_layer.remove_child(collectibles[Vector2(x,y)])
+				collectibles[Vector2(x,y)].queue_free()
+				collectibles.erase(Vector2(x,y))
+				
 				var WeaponScene = Dialogic.start('WeaponScene')
 				add_child(WeaponScene)
 				WeaponScene.connect("dialogic_signal", self, "_dialogic_end")
