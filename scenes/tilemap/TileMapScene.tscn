@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://scenes/tilemap/TileMap.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/tilemap/TileMapScene.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/map.png" type="Texture" id=5]
 [ext_resource path="res://scenes/CombatScene/CombatScene.tscn" type="PackedScene" id=6]
 [ext_resource path="res://documentazione/Art/Exploration Sprites/Moveset.png" type="Texture" id=7]
+[ext_resource path="res://assets/fog.png" type="Texture" id=8]
 [ext_resource path="res://scenes/UILayer/UILayer.tscn" type="PackedScene" id=9]
 
 [sub_resource type="AtlasTexture" id=25]
@@ -231,6 +232,7 @@ tracks/1/keys = {
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 2 )
+spawn_pct = 0.02
 
 [node name="Map" type="Sprite" parent="."]
 position = Vector2( 408, 520 )
@@ -259,6 +261,11 @@ drag_margin_left = 0.5
 drag_margin_top = 0.5
 drag_margin_right = 0.5
 drag_margin_bottom = 0.5
+
+[node name="InitialFog" type="Sprite" parent="Player"]
+unique_name_in_owner = true
+position = Vector2( 24, 24 )
+texture = ExtResource( 8 )
 
 [node name="Fog" type="Light2D" parent="Player"]
 unique_name_in_owner = true

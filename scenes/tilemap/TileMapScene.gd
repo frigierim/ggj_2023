@@ -3,6 +3,7 @@ onready var map_camera = $"%MapCamera"
 onready var game_map = $"%GameMap"
 onready var player = $"%Player"
 onready var fog = $"%Fog"
+onready var initial_fog = $"%InitialFog"
 onready var visible_map = $"%VisibleMap"
 onready var scripts_map = $"%ScriptsMap"
 onready var combat_layer = $"%CombatLayer"
@@ -70,6 +71,7 @@ func _ready():
 	#map_camera.limit_right  = MAP_W * TILE_W
 	_accept_input = false
 	
+	initial_fog.visible = true
 	fog.visible = false
 	first_blood = false
 	game_over = false
@@ -89,9 +91,11 @@ func _set_illumination(new_value : bool):
 		if new_value:
 			visible_map.self_modulate = Color(1,1,1, .98)
 			fog.visible = true
+			initial_fog.visible = false
 		else:
 			visible_map.self_modulate = Color(1,1,1, 0)
 			fog.visible = false
+			initial_fog.visible = true
 	
 	illumination = new_value
 	
@@ -138,8 +142,6 @@ func parse_map():
 		position_y = GameStatus.player_position.y as int
 		player.position = GameStatus.player_position * Vector2(TILE_W, TILE_H)
 	
-	print(player.position)		
-	print("Entering map, position %d - %d" % [position_x, position_y ])				
 	_fill_tile(position_x, position_y, TILE_ID_EMPTY)
 	
 
@@ -156,7 +158,6 @@ func _check_position(x : int, y : int) -> bool:
 
 func _fill_tile(x : int, y : int, cell_id : int):
 
-	print("Filling tiles (%d, %d) with %d " % [ x, y, cell_id])
 	for j in range(clamp(y - 1, 0, MAP_MAX_Y), clamp(y + 1, 0, MAP_MAX_Y) + 1):
 		for i in range(clamp(x - 1, 0, MAP_MAX_X), clamp(x + 1, 0, MAP_MAX_X) + 1):
 			visible_map.set_cell(i, j, cell_id)
@@ -191,37 +192,31 @@ func _on_movement_finished():
 	position_x = _target_x
 	position_y = _target_y
 	_fill_tile(_target_x, _target_y, TILE_ID_EMPTY)
-	print("Movement finished")
 	_handle_new_position(position_x, position_y)
 	
 func _move(direction : int):
 	
-	print("Evaluating movement")
 	
 	match direction:
 		
 		MovementDirection.NORTH:
 			if _check_position(position_x, position_y - 1):
 				_accept_input = false
-				print("Movement accepted,  disabling input")
 				_translate(position_x, position_y - 1, direction)
 					
 		MovementDirection.EAST:
 			if _check_position(position_x + 1, position_y):
 				_accept_input = false
-				print("Movement accepted,  disabling input")
 				_translate(position_x + 1, position_y, direction)
 			
 		MovementDirection.SOUTH:
 			if _check_position(position_x, position_y + 1):
 				_accept_input = false
-				print("Movement accepted,  disabling input")
 				_translate(position_x, position_y + 1, direction)
 			
 		MovementDirection.WEST:
 			if _check_position(position_x - 1, position_y):
 				_accept_input = false
-				print("Movement accepted,  disabling input")
 				_translate(position_x - 1, position_y, direction)
 				
 
@@ -243,7 +238,6 @@ func _input(event):
 		_move(MovementDirection.EAST)
 
 func _dialogic_end(_arg):
-	print("Dialogue complete, reaccepting inputs")
 	ui_layer.visible = true
 	_accept_input = true
 	
@@ -254,7 +248,6 @@ func _dialogic_end(_arg):
 func _handle_new_position(x: int, y: int):
 	
 	GameStatus.set_position(Vector2(x,y))
-	print("Setting position %d, %d" % [x, y])
 	
 	# Check for scripted encounters
 	var cell_id = scripts_map.get_cell(x, y)
@@ -268,7 +261,6 @@ func _handle_new_position(x: int, y: int):
 		GameStatus.collect_event(Vector2(x,y))
 		
 		var tile = scripts_map.tile_set.tile_get_name(cell_id)
-		print(tile)
 		match tile:
 				
 			"start":
@@ -280,7 +272,6 @@ func _handle_new_position(x: int, y: int):
 				#_accept_input = true
 				
 			"end":
-				print("Game over!")
 				game_over = true
 				ui_layer.visible = false
 				var EndingScene = Dialogic.start('EndingScene')
@@ -301,13 +292,11 @@ func _handle_new_position(x: int, y: int):
 				}
 				
 				if dead_ends.has(Vector2(x,y)):
-					print("Dead end found!")
 					var DeadEndScene = Dialogic.start(dead_ends[Vector2(x,y)])
 					add_child(DeadEndScene)
 					DeadEndScene.connect("dialogic_signal", self, "_dialogic_end")
 					ui_layer.visible = false
 				else:
-					print("Dead end not found")
 					assert(false)
 					_accept_input = true
 
@@ -370,7 +359,6 @@ func _handle_new_position(x: int, y: int):
 
 			start_combat(enemy_chance[randi() % len(enemy_chance)])
 		else:
-			print("No encounter, reaccepting inputs")
 			_accept_input = true
 			
 
@@ -396,7 +384,6 @@ func _combat_scene_closed():
 	combat_scene.visible = false
 	ui_layer.visible = true
 	_accept_input = true
-	print("Combat complete, reaccepting inputs")
 	
 	if not first_blood and GameStatus.player_hp > 0:
 		# Play first battle dialog
